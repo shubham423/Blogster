@@ -1,4 +1,4 @@
-package com.example.blogster.auth
+package com.example.blogster.ui.auth
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
