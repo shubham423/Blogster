@@ -1,5 +1,6 @@
 package com.example.blogster.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,9 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import com.example.blogster.MainActivity
 import com.example.blogster.data.remote.Resource
-import com.example.blogster.data.remote.requests.LoginRequest
-import com.example.blogster.data.remote.requests.UserLogInCredentials
 import com.example.blogster.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +19,7 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
 
-    private val viewModel :AuthViewModel by activityViewModels()
+    private val viewModel: AuthViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -27,7 +27,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding= FragmentLoginBinding.inflate(layoutInflater)
+        binding = FragmentLoginBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -38,20 +38,28 @@ class LoginFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.onLoginResponse.observe(viewLifecycleOwner){
-            Log.d("LoginFrgment Up","${it.data}")
-            when(it){
-                is Resource.Success->{
-                   Log.d("LoginFrgment","${it.data}")
-                    binding.progressBar.visibility=View.INVISIBLE
+        viewModel.onLoginResponse.observe(viewLifecycleOwner) {
+            Log.d("LoginFragment Up", "${it.data?.email}")
+            when (it) {
+                is Resource.Success -> {
+                    Log.d("LoginFrgment", "${it.data}")
+                    Toast.makeText(
+                        requireContext(),
+                        "User Logged in successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                    binding.progressBar.visibility = View.INVISIBLE
                 }
-                is Resource.Error->{
-                    Log.d("LoginFrgment error","${it.message}")
+                is Resource.Error -> {
+                    Log.d("LoginFragment error", "${it.message}")
+                    binding.progressBar.visibility = View.INVISIBLE
+                }
+                is Resource.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
                 }
                 else -> {
-                    Log.d("LoginFrgment else","${it}")
-                    Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
-                    binding.progressBar.visibility=View.INVISIBLE
+                    Log.d("LoginFragment else", "$it")
                 }
             }
         }
@@ -59,8 +67,11 @@ class LoginFragment : Fragment() {
 
     private fun setUpClickListeners() {
         binding.signInBtn.setOnClickListener {
-            binding.progressBar.visibility=View.VISIBLE
-            viewModel.loginUser(binding.emailEt.text.toString(),binding.passwordEt.text.toString())
+            binding.progressBar.visibility = View.VISIBLE
+            viewModel.loginUser(
+                binding.emailEt.text.toString(),
+                binding.passwordEt.text.toString()
+            )
         }
     }
 

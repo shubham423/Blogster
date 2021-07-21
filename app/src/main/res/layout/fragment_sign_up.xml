@@ -9,7 +9,6 @@
     tools:context=".ui.auth.SignUpFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/name_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="220dp"
@@ -17,13 +16,13 @@
         android:hint="@string/name">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -31,13 +30,13 @@
         android:hint="@string/email">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -46,6 +45,7 @@
         app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
