@@ -7,4 +7,7 @@
     <string name="login">Login</string>
     <string name="not_have_an_account_sign_up">Dont have an account? Sign Up</string>
     <string name="name">Name</string>
+    <string name="title_feed">Feed</string>
+    <string name="title_create_article">Create Article</string>
+    <string name="title_profile">Profile</string>
 </resources>

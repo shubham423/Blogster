@@ -15,4 +15,19 @@
         android:name="com.example.blogster.ui.auth.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="com.example.blogster.ui.feed.FeedFragment"
+        android:label="fragment_feed"
+        tools:layout="@layout/fragment_feed" />
+    <fragment
+        android:id="@+id/createArticleFragment"
+        android:name="com.example.blogster.ui.createArticle.CreateArticleFragment"
+        android:label="fragment_create_article"
+        tools:layout="@layout/fragment_create_article" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.blogster.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

@@ -70,6 +70,8 @@ class SignUpFragment : Fragment() {
                 binding.passwordEt.text.toString(),
                 binding.nameEt.text.toString()
             )
+
+
         }
     }
 
