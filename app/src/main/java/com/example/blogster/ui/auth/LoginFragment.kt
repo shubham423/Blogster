@@ -1,5 +1,6 @@
 package com.example.blogster.ui.auth
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.blogster.MainActivity
+import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +23,6 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
 
     private val viewModel: AuthViewModel by activityViewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +50,15 @@ class LoginFragment : Fragment() {
                         "User Logged in successfully",
                         Toast.LENGTH_SHORT
                     ).show()
-                    startActivity(Intent(requireContext(), MainActivity::class.java))
+
+                    val token = it.data?.token
+                    val preferences =
+                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
+                    preferences.edit().putString("TOKEN", token).apply()
+
+                    startActivity(Intent(requireContext(), MainActivity::class.java)).also {
+                        requireActivity().finish()
+                    }
                     binding.progressBar.visibility = View.INVISIBLE
                 }
                 is Resource.Error -> {
@@ -72,6 +82,10 @@ class LoginFragment : Fragment() {
                 binding.emailEt.text.toString(),
                 binding.passwordEt.text.toString()
             )
+        }
+
+        binding.signUpTv.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment2_to_signUpFragment2)
         }
     }
 

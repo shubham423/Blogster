@@ -3,31 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/feedFragment">
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.blogster.ui.auth.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.example.blogster.ui.auth.SignUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
     <fragment
         android:id="@+id/feedFragment"
         android:name="com.example.blogster.ui.feed.FeedFragment"
-        android:label="fragment_feed"
+        android:label="Feed"
         tools:layout="@layout/fragment_feed" />
     <fragment
         android:id="@+id/createArticleFragment"
         android:name="com.example.blogster.ui.createArticle.CreateArticleFragment"
-        android:label="fragment_create_article"
+        android:label="@string/title_create_article"
         tools:layout="@layout/fragment_create_article" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.blogster.ui.profile.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/myFeedFragment"
+        android:name="com.example.blogster.ui.feed.MyFeedFragment"
+        android:label="fragment_global_feed"
+        tools:layout="@layout/fragment_global_feed" />
+    <fragment
+        android:id="@+id/globalFeedFragment"
+        android:name="com.example.blogster.ui.feed.GlobalFeedFragment"
+        android:label="GlobalFeedFragment" />
 </navigation>

@@ -1,19 +1,22 @@
 package com.example.blogster.ui.auth
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.blogster.MainActivity
-import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentSignUpBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
 
@@ -37,6 +40,7 @@ class SignUpFragment : Fragment() {
     private fun setupObservers() {
         viewModel.onSignUpResponse.observe(viewLifecycleOwner) {
             Log.d("LoginFragment Up", "${it.data?.email}")
+            binding.progressBar?.visibility = View.INVISIBLE
             when (it) {
                 is Resource.Success -> {
                     Log.d("LoginFrgment", "${it.data}")
@@ -45,8 +49,16 @@ class SignUpFragment : Fragment() {
                         "User registered successfully",
                         Toast.LENGTH_SHORT
                     ).show()
+
+                    //Save token here
+
+                    //Save token here
+                    val token = it.data?.token
+                    val preferences =
+                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
+                    preferences.edit().putString("TOKEN", token).apply()
+
                     startActivity(Intent(requireContext(), MainActivity::class.java))
-                    binding.progressBar?.visibility = View.INVISIBLE
                 }
                 is Resource.Error -> {
                     Log.d("LoginFragment error", "${it.message}")
@@ -66,12 +78,10 @@ class SignUpFragment : Fragment() {
         binding.signInBtn.setOnClickListener {
             binding.progressBar?.visibility = View.VISIBLE
             viewModel.signInUser(
-                binding.emailEt.text.toString(),
-                binding.passwordEt.text.toString(),
-                binding.nameEt.text.toString()
+                binding.emailEt.editText?.text.toString(),
+                binding.passwordEt.editText?.text.toString(),
+                binding.nameEt.editText?.text.toString()
             )
-
-
         }
     }
 
