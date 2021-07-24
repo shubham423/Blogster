@@ -1,10 +1,7 @@
 
 package com.example.blogster.data.repository
 
-import android.content.Context
-import android.content.Intent
 import android.util.Log
-import com.example.blogster.MainActivity
 import com.example.blogster.data.remote.api.ConduitApi
 import com.example.blogster.data.remote.api.ConduitAuthApi
 import com.example.blogster.data.remote.responses.*
@@ -31,4 +28,5 @@ class MainRepository @Inject constructor(private val api: ConduitApi,private val
         Log.d("MainRepo", token)
         return conduitAuthApi.getFeedArticles()
     }
+
 }

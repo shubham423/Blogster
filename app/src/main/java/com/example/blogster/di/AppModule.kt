@@ -1,5 +1,7 @@
 package com.example.blogster.di
 
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.example.blogster.ConduitApp
 import com.example.blogster.data.remote.api.ConduitApi
 import com.example.blogster.data.remote.api.ConduitAuthApi
 import dagger.Module
@@ -8,6 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
@@ -19,12 +22,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHttpClientBuilder(): OkHttpClient = OkHttpClient.Builder()
-        .readTimeout(60, TimeUnit.SECONDS)
-        .connectTimeout(60, TimeUnit.SECONDS)
-        .build()
+    fun providesLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    }
 
-
+    @Provides
+    @Singleton
+    fun provideHttpClientBuilder(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+        OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(ChuckerInterceptor(ConduitApp.applicationContext()))
+            .addInterceptor(loggingInterceptor)
+            .build()
 
 
     @Provides
@@ -41,26 +51,17 @@ object AppModule {
         }
 
     }
+
     var authToken: String? = null
-
-//    @Provides
-//    @Singleton
-//    fun provideRetrofit(): Retrofit =
-//        Retrofit.Builder()
-//            .baseUrl("https://conduit.productionready.io/api/")
-//            .addConverterFactory(MoshiConverterFactory.create())
-//            .build()
-
 
     @Provides
     @Singleton
-    fun provideRetrofitForAuth(okHttpClient: OkHttpClient,authInterceptor: Interceptor): Retrofit =
+    fun provideRetrofitForAuth(okHttpClient: OkHttpClient, authInterceptor: Interceptor): Retrofit =
         Retrofit.Builder()
             .baseUrl("https://conduit.productionready.io/api/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient.newBuilder().addInterceptor(authInterceptor).build())
             .build()
-
 
 
     @Provides
