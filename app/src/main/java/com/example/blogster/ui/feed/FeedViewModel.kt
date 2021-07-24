@@ -19,6 +19,9 @@ class FeedViewModel @Inject constructor(
     private val _onFeedResponse = MutableLiveData<Resource<List<Article>>>()
     val feed: LiveData<Resource<List<Article>>> = _onFeedResponse
 
+    private val _onMyFeedResponse = MutableLiveData<Resource<List<Article>>>()
+    val myFeed: LiveData<Resource<List<Article>>> = _onMyFeedResponse
+
     fun fetchGlobalFeed() = viewModelScope.launch {
         _onFeedResponse.postValue(Resource.Loading())
         viewModelScope.launch {
@@ -27,6 +30,19 @@ class FeedViewModel @Inject constructor(
                 _onFeedResponse.postValue(response.body()?.let { Resource.Success(it.articles) })
             }else{
                 _onFeedResponse.postValue(Resource.Error(response.message()))
+            }
+
+        }
+    }
+
+    fun fetchMyFeed(token :String) = viewModelScope.launch {
+        _onFeedResponse.postValue(Resource.Loading())
+        viewModelScope.launch {
+            val response = mainRepository.getMyFeed(token)
+            if (response.isSuccessful){
+                _onMyFeedResponse.postValue(response.body()?.let { Resource.Success(it.articles) })
+            }else{
+                _onMyFeedResponse.postValue(Resource.Error(response.message()))
             }
 
         }
