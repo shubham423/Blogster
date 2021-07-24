@@ -16,38 +16,40 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
-    private val _onLoginResponse = MutableLiveData<Resource<User>>()
-    val onLoginResponse: LiveData<Resource<User>> = _onLoginResponse
+    private val _userResponse = MutableLiveData<Resource<User>?>()
+    val userResponse: MutableLiveData<Resource<User>?> = _userResponse
 
-    private val _onSignUpResponse = MutableLiveData<Resource<User>>()
-    val onSignUpResponse: LiveData<Resource<User>> = _onSignUpResponse
 
 
     fun loginUser(email: String, password: String) {
-        _onLoginResponse.postValue(Resource.Loading())
+        _userResponse.postValue(Resource.Loading())
         viewModelScope.launch {
             val response = mainRepository.loginUser(email, password)
             Log.d("viewmodel", "${response} and $email")
             if (response.isSuccessful) {
-                _onLoginResponse.postValue(Resource.Success(response.body()?.user!!))
+                _userResponse.postValue(Resource.Success(response.body()?.user!!))
             } else {
-                _onLoginResponse.postValue(Resource.Error(response.message()))
+                _userResponse.postValue(Resource.Error(response.message()))
             }
 
         }
     }
 
     fun signInUser(email: String, password: String, username: String) {
-        _onSignUpResponse.postValue(Resource.Loading())
+        _userResponse.postValue(Resource.Loading())
         viewModelScope.launch {
             val response = mainRepository.signUpUser(email, password, username)
             if (response.isSuccessful){
-                _onSignUpResponse.postValue(Resource.Success(response.body()?.user!!))
+                _userResponse.postValue(Resource.Success(response.body()?.user!!))
             }else{
-                _onSignUpResponse.postValue(Resource.Error(response.message()))
+                _userResponse.postValue(Resource.Error(response.message()))
             }
 
         }
+    }
+
+    fun logout() {
+        _userResponse.postValue(null)
     }
 
 }

@@ -38,8 +38,8 @@ class SignUpFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.onSignUpResponse.observe(viewLifecycleOwner) {
-            Log.d("LoginFragment Up", "${it.data?.email}")
+        viewModel.userResponse.observe(viewLifecycleOwner) {
+            Log.d("LoginFragment Up", "${it?.data?.email}")
             binding.progressBar?.visibility = View.INVISIBLE
             when (it) {
                 is Resource.Success -> {
@@ -84,5 +84,4 @@ class SignUpFragment : Fragment() {
             )
         }
     }
-
 }

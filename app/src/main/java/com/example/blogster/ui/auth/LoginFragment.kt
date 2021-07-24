@@ -40,8 +40,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.onLoginResponse.observe(viewLifecycleOwner) {
-            Log.d("LoginFragment Up", "${it.data?.email}")
+        viewModel.userResponse.observe(viewLifecycleOwner) {
+            Log.d("LoginFragment Up", "${it?.data?.email}")
             when (it) {
                 is Resource.Success -> {
                     Log.d("LoginFrgment", "${it.data}")

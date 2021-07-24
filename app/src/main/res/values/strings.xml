@@ -5,10 +5,11 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="not_have_an_account_sign_up">Dont have an account? Sign Up</string>
+    <string name="not_have_an_account_sign_up">Dont have an account?</string>
     <string name="name">Name</string>
     <string name="title_feed">Feed</string>
     <string name="title_create_article">Create Article</string>
     <string name="title_profile">Profile</string>
     <string name="signup">Sign Up</string>
+    <string name="logout">Logout</string>
 </resources>
