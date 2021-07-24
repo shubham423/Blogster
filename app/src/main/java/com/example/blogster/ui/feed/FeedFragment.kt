@@ -26,20 +26,22 @@ class FeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        feedViewPagerAdapter= FeedViewPagerAdapter(requireActivity())
+        binding.pager.adapter = feedViewPagerAdapter
+
         TabLayoutMediator(binding.tabLayout, binding.pager
         ) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "TAB ONE"
+                    tab.text = "My Feed"
                 }
                 1 -> {
-                    tab.text = "TAB TWO"
+                    tab.text = "Global Feed"
                 }
             }
         }.attach()
 
-        feedViewPagerAdapter= FeedViewPagerAdapter(requireActivity())
-        binding.pager.adapter = feedViewPagerAdapter
     }
 
 }

@@ -8,13 +8,15 @@ import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val api: ConduitApi) {
 
-    suspend fun loginUser(email: String,password: String): User? {
-        val response= api.loginUser(LoginRequest(LoginData(email, password)))
-        return response.body()?.user
+    suspend fun loginUser(email: String,password: String):Response<UserResponse> {
+        return  api.loginUser(LoginRequest(LoginData(email, password)))
     }
 
-    suspend fun signUpUser(email: String,password: String,username: String): User?{
-        val response= api.signUpUser(SignupRequest(SignupData(email,password,username)))
-        return response.body()?.user
+    suspend fun signUpUser(email: String,password: String,username: String): Response<UserResponse>{
+        return api.signUpUser(SignupRequest(SignupData(email,password,username)))
+    }
+
+    suspend fun getGlobalFeed(): Response<ArticlesResponse> {
+        return api.getArticles()
     }
 }

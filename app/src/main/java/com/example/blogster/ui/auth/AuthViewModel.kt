@@ -28,10 +28,10 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             val response = mainRepository.loginUser(email, password)
             Log.d("viewmodel", "${response} and $email")
-            if (response != null) {
-                _onLoginResponse.postValue(Resource.Success(response))
+            if (response.isSuccessful) {
+                _onLoginResponse.postValue(Resource.Success(response.body()?.user!!))
             } else {
-                _onLoginResponse.postValue(Resource.Error("response is null"))
+                _onLoginResponse.postValue(Resource.Error(response.message()))
             }
 
         }
@@ -41,11 +41,12 @@ class AuthViewModel @Inject constructor(
         _onSignUpResponse.postValue(Resource.Loading())
         viewModelScope.launch {
             val response = mainRepository.signUpUser(email, password, username)
-            if (response != null) {
-                _onSignUpResponse.postValue(Resource.Success(response))
-            } else {
-                _onLoginResponse.postValue(Resource.Error("response is null"))
+            if (response.isSuccessful){
+                _onSignUpResponse.postValue(Resource.Success(response.body()?.user!!))
+            }else{
+                _onSignUpResponse.postValue(Resource.Error(response.message()))
             }
+
         }
     }
 
