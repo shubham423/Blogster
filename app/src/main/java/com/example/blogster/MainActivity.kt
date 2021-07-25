@@ -1,5 +1,6 @@
 package com.example.blogster
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -13,7 +14,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.blogster.databinding.ActivityMainBinding
 import com.example.blogster.ui.auth.AuthActivity
-import com.example.blogster.ui.auth.AuthActivity_GeneratedInjector
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.utils.Constants.LOG_OUT
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,12 +34,21 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.feedFragment,
-                R.id.createArticleFragment,
+                R.id.articlesFragment,
                 R.id.profileFragment
             )
         )
         binding.bottomNav.setupWithNavController(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        val preferences =
+            this.getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
+        val token=preferences.getString("TOKEN", null)
+
+        token.let {
+            authViewModel.getCurrentUser(it!!)
+        }
+
 
 
     }

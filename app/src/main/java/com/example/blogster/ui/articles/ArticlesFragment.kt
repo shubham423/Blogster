@@ -1,46 +1,45 @@
-package com.example.blogster.ui.feed
+package com.example.blogster.ui.articles
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.example.blogster.databinding.FragmentFeedBinding
+import com.example.blogster.databinding.FragmentArticlesBinding
+import com.example.blogster.ui.feed.FeedViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class FeedFragment : Fragment() {
-    private lateinit var binding: FragmentFeedBinding
-    private lateinit var feedViewPagerAdapter: FeedViewPagerAdapter
+class ArticlesFragment : Fragment() {
+    private lateinit var binding : FragmentArticlesBinding
+    private lateinit var articlesViewPagerAdapter: ArticlesViewPagerAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
-        binding= FragmentFeedBinding.inflate(layoutInflater)
+        binding= FragmentArticlesBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        feedViewPagerAdapter= FeedViewPagerAdapter(requireActivity())
-        binding.pager.adapter = feedViewPagerAdapter
+        articlesViewPagerAdapter= ArticlesViewPagerAdapter(requireActivity())
+        binding.pager.adapter = articlesViewPagerAdapter
 
 
         TabLayoutMediator(binding.tabLayout, binding.pager
         ) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "My Feed"
+                    tab.text = "My Articles"
                 }
                 1 -> {
-                    tab.text = "Global Feed"
+                    tab.text = "Favorite Articles"
                 }
             }
         }.attach()
-
     }
-
 }

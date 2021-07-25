@@ -16,6 +16,8 @@
     <color name="secondaryColor">#8d8d8d</color>
     <color name="secondaryLightColor">#bdbdbd</color>
 
+    <color name="light_grey_tv">#7d7d7d</color>
+
 
 
 </resources>

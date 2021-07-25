@@ -29,4 +29,27 @@ class MainRepository @Inject constructor(private val api: ConduitApi,private val
         return conduitAuthApi.getFeedArticles()
     }
 
+    suspend fun updateUser(
+        bio: String?,
+        username: String?,
+        image: String?,
+        email: String?,
+        password: String?
+    ): Response<UserResponse> {
+
+        return conduitAuthApi.updateCurrentUser(UserUpdateRequest(UserUpdateData(
+            bio, email, image, username, password
+        )))
+    }
+
+    suspend fun getCurrentUser(token: String): Response<UserResponse> {
+        AppModule.authToken = token
+        return conduitAuthApi.getCurrentUser()
+    }
+
+    suspend fun getFavoriteArticles(token: String,username: String): Response<List<ArticleResponse>> {
+        AppModule.authToken = token
+        return conduitAuthApi.getFavoriteArticle(username)
+    }
+
 }

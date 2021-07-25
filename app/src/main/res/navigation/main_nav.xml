@@ -11,10 +11,10 @@
         android:label="Feed"
         tools:layout="@layout/fragment_feed" />
     <fragment
-        android:id="@+id/createArticleFragment"
-        android:name="com.example.blogster.ui.createArticle.CreateArticleFragment"
-        android:label="@string/title_create_article"
-        tools:layout="@layout/fragment_create_article" />
+        android:id="@+id/articlesFragment"
+        android:name="com.example.blogster.ui.articles.ArticlesFragment"
+        android:label="Articles"
+        tools:layout="@layout/fragment_articles" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.blogster.ui.profile.ProfileFragment"
