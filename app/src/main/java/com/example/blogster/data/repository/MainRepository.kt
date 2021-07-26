@@ -47,7 +47,7 @@ class MainRepository @Inject constructor(private val api: ConduitApi,private val
         return conduitAuthApi.getCurrentUser()
     }
 
-    suspend fun getFavoriteArticles(token: String,username: String): Response<List<ArticleResponse>> {
+    suspend fun getFavoriteArticles(token: String,username: String): Response<ArticlesResponse> {
         AppModule.authToken = token
         return conduitAuthApi.getFavoriteArticle(username)
     }

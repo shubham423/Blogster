@@ -32,10 +32,10 @@ interface ConduitAuthApi {
     @GET("articles/feed")
     suspend fun getFeedArticles(): Response<ArticlesResponse>
 
-    @GET("articles/favorite")
+    @GET("articles")
     suspend fun getFavoriteArticle(
        @Query ("favorited") favorited: String
-    ): Response<List<ArticleResponse>>
+    ): Response<ArticlesResponse>
 
     @DELETE("articles/{slug}/favorite")
     suspend fun unfavoriteArticle(

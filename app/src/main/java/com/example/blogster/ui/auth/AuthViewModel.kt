@@ -1,7 +1,6 @@
 package com.example.blogster.ui.auth
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,8 +21,8 @@ class AuthViewModel @Inject constructor(
     private val _userResponse = MutableLiveData<Resource<User>?>()
     val userResponse: MutableLiveData<Resource<User>?> = _userResponse
 
-    private val _articlesResponse = MutableLiveData<Resource<List<ArticleResponse>>?>()
-    val articlesResponse: MutableLiveData<Resource<List<ArticleResponse>>?> = _articlesResponse
+    private val _articlesResponse = MutableLiveData<Resource<List<Article>>>()
+    val articlesResponse: MutableLiveData<Resource<List<Article>>> = _articlesResponse
 
 
     fun loginUser(email: String, password: String) {
@@ -84,8 +83,9 @@ class AuthViewModel @Inject constructor(
 
     fun getFavoriteArticles(token: String, username: String) = viewModelScope.launch {
         val response = mainRepository.getFavoriteArticles(token,username)
+
         if (response.isSuccessful) {
-            _articlesResponse.postValue(Resource.Success(response.body()!!))
+            _articlesResponse.postValue(Resource.Success(response.body()?.articles!!))
         } else {
             _userResponse.postValue(Resource.Error(response.message()))
         }

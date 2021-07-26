@@ -45,6 +45,7 @@ class FavoriteArticlesFragment : Fragment() {
 
         if (token != null) {
             viewModel.getCurrentUser(token!!)
+            Log.d("FavoriteArticlesFrag", "###################### $token")
         }
         setupObservers()
     }
@@ -69,11 +70,12 @@ class FavoriteArticlesFragment : Fragment() {
         }
 
         viewModel.articlesResponse.observe(viewLifecycleOwner){
-            Log.d("FavoriteFragment1 error", "${it}")
+            Log.d("FavoriteFragment1 error", "$it")
             when (it) {
                 is Resource.Success -> {
                     articleAdapter=ArticleFeedAdapter()
                     binding.favoriteRecyclerView.adapter=articleAdapter
+                    articleAdapter.submitList(it.data)
                 }
                 is Resource.Error -> {
                     Log.d("FavoriteFragment1 error", "${it.message}")
