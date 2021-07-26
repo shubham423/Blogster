@@ -24,6 +24,9 @@ class AuthViewModel @Inject constructor(
     private val _articlesResponse = MutableLiveData<Resource<List<Article>>>()
     val articlesResponse: MutableLiveData<Resource<List<Article>>> = _articlesResponse
 
+    private val _myArticlesResponse = MutableLiveData<Resource<List<Article>>>()
+    val myArticlesResponse: MutableLiveData<Resource<List<Article>>> = _myArticlesResponse
+
 
     fun loginUser(email: String, password: String) {
         _userResponse.postValue(Resource.Loading())
@@ -95,9 +98,9 @@ class AuthViewModel @Inject constructor(
         val response = mainRepository.getMyArticles(token,username)
 
         if (response.isSuccessful) {
-            _articlesResponse.postValue(Resource.Success(response.body()?.articles!!))
+            _myArticlesResponse.postValue(Resource.Success(response.body()?.articles!!))
         } else {
-            _userResponse.postValue(Resource.Error(response.message()))
+            _myArticlesResponse.postValue(Resource.Error(response.message()))
         }
     }
 

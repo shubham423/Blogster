@@ -24,6 +24,7 @@ class MyArticlesFragment : Fragment() {
     private lateinit var articleAdapter: ArticleFeedAdapter
 
     private var token : String?=null
+    private var username : String?=null
 
 
     override fun onCreateView(
@@ -52,7 +53,9 @@ class MyArticlesFragment : Fragment() {
             Log.d("MyArticlesFrag error", "$it")
             when (it) {
                 is Resource.Success -> {
-                    it.data?.username?.let { it1 -> token?.let { it2 ->
+                    it.data?.username?.let { it1 ->
+                        username=it1
+                        token?.let { it2 ->
                         viewModel.getMyArticles(
                             it2, it1)
                     } }
@@ -66,7 +69,7 @@ class MyArticlesFragment : Fragment() {
             }
         }
 
-        viewModel.articlesResponse.observe(viewLifecycleOwner){
+        viewModel.myArticlesResponse.observe(viewLifecycleOwner){
             Log.d("FavoriteFragment1 error", "$it")
             when (it) {
                 is Resource.Success -> {
@@ -84,5 +87,11 @@ class MyArticlesFragment : Fragment() {
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("onResume","token $token and $username ")
+        token?.let { username?.let { it1 -> viewModel.getMyArticles(it, it1) } }
+    }
 
 }
