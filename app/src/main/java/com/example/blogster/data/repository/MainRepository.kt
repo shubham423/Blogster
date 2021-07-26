@@ -49,7 +49,12 @@ class MainRepository @Inject constructor(private val api: ConduitApi,private val
 
     suspend fun getFavoriteArticles(token: String,username: String): Response<ArticlesResponse> {
         AppModule.authToken = token
-        return conduitAuthApi.getFavoriteArticle(username)
+        return conduitAuthApi.getFavoriteArticles(username)
+    }
+
+    suspend fun getMyArticles(token: String,username: String): Response<ArticlesResponse> {
+        AppModule.authToken = token
+        return conduitAuthApi.getMyArticle(username)
     }
 
 }

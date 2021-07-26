@@ -91,4 +91,14 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    fun getMyArticles(token: String, username: String) = viewModelScope.launch {
+        val response = mainRepository.getMyArticles(token,username)
+
+        if (response.isSuccessful) {
+            _articlesResponse.postValue(Resource.Success(response.body()?.articles!!))
+        } else {
+            _userResponse.postValue(Resource.Error(response.message()))
+        }
+    }
+
 }
