@@ -57,4 +57,9 @@ class MainRepository @Inject constructor(private val api: ConduitApi,private val
         return conduitAuthApi.getMyArticle(username)
     }
 
+    suspend fun createArticle(articleCreateRequest: ArticleCreateRequest,token: String): Response<ArticleResponse>{
+        AppModule.authToken = token
+        return conduitAuthApi.createArticle(articleCreateRequest)
+    }
+
 }

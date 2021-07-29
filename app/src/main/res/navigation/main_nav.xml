@@ -29,4 +29,9 @@
         android:id="@+id/globalFeedFragment"
         android:name="com.example.blogster.ui.feed.GlobalFeedFragment"
         android:label="GlobalFeedFragment" />
+    <fragment
+        android:id="@+id/createArticleFragment"
+        android:name="com.example.blogster.ui.articles.CreateArticleFragment"
+        android:label="@string/title_create_article"
+        tools:layout="@layout/fragment_create_article" />
 </navigation>

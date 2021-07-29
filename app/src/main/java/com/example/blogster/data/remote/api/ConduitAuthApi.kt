@@ -42,6 +42,11 @@ interface ConduitAuthApi {
         @Query ("author") author: String
     ): Response<ArticlesResponse>
 
+    @POST("articles")
+    suspend fun createArticle(
+        @Body articleCreateRequest: ArticleCreateRequest
+    ): Response<ArticleResponse>
+
     @DELETE("articles/{slug}/favorite")
     suspend fun unfavoriteArticle(
         @Path("slug") slug: String

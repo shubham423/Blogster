@@ -16,4 +16,9 @@
             android:icon="@drawable/ic_settings"
             android:title="@string/title_profile" />
 
+        <item
+            android:id="@+id/createArticleFragment"
+            android:icon="@drawable/ic_create"
+            android:title="@string/title_create_article" />
+
 </menu>

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.data.remote.responses.Article
+import com.example.blogster.data.remote.responses.ArticleCreateRequest
 import com.example.blogster.data.remote.responses.ArticleResponse
 import com.example.blogster.data.remote.responses.User
 import com.example.blogster.data.repository.MainRepository
@@ -26,6 +27,9 @@ class AuthViewModel @Inject constructor(
 
     private val _myArticlesResponse = MutableLiveData<Resource<List<Article>>>()
     val myArticlesResponse: MutableLiveData<Resource<List<Article>>> = _myArticlesResponse
+
+    private val _createArticleResponse = MutableLiveData<Resource<Article>>()
+    val createArticleResponse: MutableLiveData<Resource<Article>> = _createArticleResponse
 
 
     fun loginUser(email: String, password: String) {
@@ -104,4 +108,14 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+
+    fun createArticle(articleCreateRequest: ArticleCreateRequest,token: String) = viewModelScope.launch {
+        val response = mainRepository.createArticle(articleCreateRequest,token)
+
+        if (response.isSuccessful) {
+            _createArticleResponse.postValue(Resource.Success(response.body()?.article!!))
+        } else {
+            _myArticlesResponse.postValue(Resource.Error(response.message()))
+        }
+    }
 }
