@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.blogster.MainActivity
 import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
@@ -17,6 +18,7 @@ import com.example.blogster.databinding.FragmentArticlesBinding
 import com.example.blogster.databinding.FragmentFavoriteArticlesBinding
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.ArticleFeedAdapter
+import com.example.blogster.ui.feed.GlobalFeedFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -73,7 +75,7 @@ class FavoriteArticlesFragment : Fragment() {
             Log.d("FavoriteFragment1 error", "$it")
             when (it) {
                 is Resource.Success -> {
-                    articleAdapter=ArticleFeedAdapter()
+                    articleAdapter=ArticleFeedAdapter({openArticle(it)})
                     binding.favoriteRecyclerView.adapter=articleAdapter
                     articleAdapter.submitList(it.data)
                 }
@@ -85,6 +87,11 @@ class FavoriteArticlesFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun openArticle(articleId: String) {
+        val action= FavoriteArticlesFragmentDirections.actionFavoriteArticlesFragmentToArticleDetailsFragment(articleId)
+        findNavController().navigate(action)
     }
 
 }

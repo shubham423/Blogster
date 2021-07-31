@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentFavoriteArticlesBinding
@@ -73,7 +74,7 @@ class MyArticlesFragment : Fragment() {
             Log.d("FavoriteFragment1 error", "$it")
             when (it) {
                 is Resource.Success -> {
-                    articleAdapter=ArticleFeedAdapter()
+                    articleAdapter=ArticleFeedAdapter({openArticle(it)})
                     binding.myArticlesRecyclerView.adapter=articleAdapter
                     articleAdapter.submitList(it.data)
                 }
@@ -92,6 +93,11 @@ class MyArticlesFragment : Fragment() {
         super.onResume()
         Log.d("onResume","token $token and $username ")
         token?.let { username?.let { it1 -> viewModel.getMyArticles(it, it1) } }
+    }
+
+    private fun openArticle(articleId: String) {
+        val action= MyArticlesFragmentDirections.actionMyArticlesFragmentToArticleDetailsFragment(articleId)
+        findNavController().navigate(action)
     }
 
 }

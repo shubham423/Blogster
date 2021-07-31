@@ -24,14 +24,47 @@
         android:id="@+id/myFeedFragment"
         android:name="com.example.blogster.ui.feed.MyFeedFragment"
         android:label="fragment_global_feed"
-        tools:layout="@layout/fragment_global_feed" />
+        tools:layout="@layout/fragment_global_feed" >
+        <action
+            android:id="@+id/action_myFeedFragment_to_articleDetailsFragment"
+            app:destination="@id/articleDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/globalFeedFragment"
         android:name="com.example.blogster.ui.feed.GlobalFeedFragment"
-        android:label="GlobalFeedFragment" />
+        android:label="GlobalFeedFragment" >
+        <action
+            android:id="@+id/action_globalFeedFragment_to_articleDetailsFragment"
+            app:destination="@id/articleDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/createArticleFragment"
         android:name="com.example.blogster.ui.articles.CreateArticleFragment"
         android:label="@string/title_create_article"
         tools:layout="@layout/fragment_create_article" />
+    <fragment
+        android:id="@+id/articleDetailsFragment"
+        android:name="com.example.blogster.ui.details.ArticleDetailsFragment"
+        android:label="fragment_article_details"
+        tools:layout="@layout/fragment_article_details" >
+        <argument
+            android:name="articleId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteArticlesFragment"
+        android:name="com.example.blogster.ui.articles.FavoriteArticlesFragment"
+        android:label="FavoriteArticlesFragment" >
+        <action
+            android:id="@+id/action_favoriteArticlesFragment_to_articleDetailsFragment"
+            app:destination="@id/articleDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myArticlesFragment"
+        android:name="com.example.blogster.ui.articles.MyArticlesFragment"
+        android:label="MyArticlesFragment" >
+        <action
+            android:id="@+id/action_myArticlesFragment_to_articleDetailsFragment"
+            app:destination="@id/articleDetailsFragment" />
+    </fragment>
 </navigation>

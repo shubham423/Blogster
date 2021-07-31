@@ -9,10 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.blogster.MainActivity
 import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentMyFeedBinding
+import com.example.blogster.ui.articles.FavoriteArticlesFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +24,7 @@ class MyFeedFragment : Fragment() {
     private lateinit var binding : FragmentMyFeedBinding
     private lateinit var feedAdapter: ArticleFeedAdapter
     private val viewModel: FeedViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +52,7 @@ class MyFeedFragment : Fragment() {
             Log.d("MyFeedFragment ", "${it.data}")
             when(it){
                 is Resource.Success->{
-                    feedAdapter=ArticleFeedAdapter()
+                    feedAdapter=ArticleFeedAdapter({openArticle(it)})
                     binding.feedRecyclerView.adapter=feedAdapter
                     feedAdapter.submitList(it.data)
                 }
@@ -59,6 +64,11 @@ class MyFeedFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun openArticle(articleId: String) {
+        val action= MyFeedFragmentDirections.actionMyFeedFragmentToArticleDetailsFragment(articleId)
+        findNavController().navigate(action)
     }
 
 }

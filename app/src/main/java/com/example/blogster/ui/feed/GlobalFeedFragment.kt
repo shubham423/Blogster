@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentGlobalFeedBinding
@@ -38,7 +40,7 @@ class GlobalFeedFragment : Fragment() {
             Log.d("GLobalFeedFragment ", "${it.data}")
             when(it){
                 is Resource.Success->{
-                    articleFeedAdapter=ArticleFeedAdapter()
+                    articleFeedAdapter=ArticleFeedAdapter({openArticle(it)})
                     binding.feedRecyclerView.adapter=articleFeedAdapter
                     articleFeedAdapter.submitList(it.data)
                 }
@@ -50,6 +52,11 @@ class GlobalFeedFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun openArticle(articleId: String) {
+        val action=GlobalFeedFragmentDirections.actionGlobalFeedFragmentToArticleDetailsFragment(articleId)
+        findNavController().navigate(action)
     }
 
 }

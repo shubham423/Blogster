@@ -1,14 +1,8 @@
 package com.example.blogster.data.remote.api
 
-import com.example.blogster.data.remote.responses.ArticlesResponse
-import com.example.blogster.data.remote.responses.LoginRequest
-import com.example.blogster.data.remote.responses.SignupRequest
-import com.example.blogster.data.remote.responses.UserResponse
+import com.example.blogster.data.remote.responses.*
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ConduitApi {
 
@@ -28,4 +22,9 @@ interface ConduitApi {
         @Query("favourited") favourited: String? = null,
         @Query("tag") tag: String? = null
     ): Response<ArticlesResponse>
+
+    @GET("articles/{slug}")
+    suspend fun getArticleBySlug(
+        @Path("slug") slug: String
+    ): Response<ArticleResponse>
 }

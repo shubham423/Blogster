@@ -10,7 +10,7 @@ import com.example.blogster.data.remote.responses.Article
 import com.example.blogster.databinding.ItemArticleBinding
 
 
-class ArticleFeedAdapter() :
+class ArticleFeedAdapter(val onArticleClicked: (slug: String) -> Unit) :
     ListAdapter<Article, ArticleFeedAdapter.ArticleViewHolder>(
         object : DiffUtil.ItemCallback<Article>() {
             override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -40,6 +40,7 @@ class ArticleFeedAdapter() :
             dateTextView.text=article.createdAt
             avatarImageView.load(article.author.image)
 
+            root.setOnClickListener { onArticleClicked(article.slug) }
         }
 
     }
