@@ -3,10 +3,12 @@ package com.example.blogster
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,12 +17,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.blogster.databinding.ActivityMainBinding
 import com.example.blogster.ui.auth.AuthActivity
 import com.example.blogster.ui.auth.AuthViewModel
+import com.example.blogster.ui.feed.ArticleDetailsCallback
 import com.example.blogster.utils.Constants.LOG_OUT
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),ArticleDetailsCallback {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private val authViewModel: AuthViewModel by viewModels()
@@ -71,6 +74,17 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
+    }
+
+    override fun onArticleClicked(articleId: String) {
+
+        Log.d("FeedFragment","callback called")
+        navController.navigate(
+            R.id.action_global_details_Fragment,
+            bundleOf(
+                resources.getString(R.string.arg_article_id) to articleId
+            )
+        )
     }
 
 }

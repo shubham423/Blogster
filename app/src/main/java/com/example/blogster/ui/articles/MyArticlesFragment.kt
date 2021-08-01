@@ -14,6 +14,7 @@ import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentFavoriteArticlesBinding
 import com.example.blogster.databinding.FragmentMyArticlesBinding
 import com.example.blogster.ui.auth.AuthViewModel
+import com.example.blogster.ui.feed.ArticleDetailsCallback
 import com.example.blogster.ui.feed.ArticleFeedAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +25,8 @@ class MyArticlesFragment : Fragment() {
     private val viewModel: AuthViewModel by activityViewModels()
     private lateinit var articleAdapter: ArticleFeedAdapter
 
+    private var callback: ArticleDetailsCallback?=null
+
     private var token : String?=null
     private var username : String?=null
 
@@ -33,6 +36,7 @@ class MyArticlesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding= FragmentMyArticlesBinding.inflate(layoutInflater)
+        callback=activity as ArticleDetailsCallback
         return binding.root
     }
 
@@ -96,8 +100,7 @@ class MyArticlesFragment : Fragment() {
     }
 
     private fun openArticle(articleId: String) {
-        val action= MyArticlesFragmentDirections.actionMyArticlesFragmentToArticleDetailsFragment(articleId)
-        findNavController().navigate(action)
+        callback?.onArticleClicked(articleId)
     }
 
 }

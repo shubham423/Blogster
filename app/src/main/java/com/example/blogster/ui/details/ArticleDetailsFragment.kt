@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentArticleDetailsBinding
 import com.example.blogster.ui.feed.FeedViewModel
@@ -18,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class ArticleDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentArticleDetailsBinding
-    private val args: ArticleDetailsFragmentArgs by navArgs()
     private val viewModel: FeedViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +31,12 @@ class ArticleDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val articleId=args.articleId
-        articleId.let {
-            viewModel.getArticle(it)
+        arguments?.let {
+            val articleId = it.getString(resources.getString(R.string.arg_article_id))
+            if (articleId != null) {
+                viewModel.getArticle(articleId)
+            }
         }
-
         setUpObservers()
     }
 

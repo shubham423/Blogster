@@ -24,19 +24,11 @@
         android:id="@+id/myFeedFragment"
         android:name="com.example.blogster.ui.feed.MyFeedFragment"
         android:label="fragment_global_feed"
-        tools:layout="@layout/fragment_global_feed" >
-        <action
-            android:id="@+id/action_myFeedFragment_to_articleDetailsFragment"
-            app:destination="@id/articleDetailsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_global_feed" />
     <fragment
         android:id="@+id/globalFeedFragment"
         android:name="com.example.blogster.ui.feed.GlobalFeedFragment"
-        android:label="GlobalFeedFragment" >
-        <action
-            android:id="@+id/action_globalFeedFragment_to_articleDetailsFragment"
-            app:destination="@id/articleDetailsFragment" />
-    </fragment>
+        android:label="GlobalFeedFragment" />
     <fragment
         android:id="@+id/createArticleFragment"
         android:name="com.example.blogster.ui.articles.CreateArticleFragment"
@@ -54,17 +46,13 @@
     <fragment
         android:id="@+id/favoriteArticlesFragment"
         android:name="com.example.blogster.ui.articles.FavoriteArticlesFragment"
-        android:label="FavoriteArticlesFragment" >
-        <action
-            android:id="@+id/action_favoriteArticlesFragment_to_articleDetailsFragment"
-            app:destination="@id/articleDetailsFragment" />
-    </fragment>
+        android:label="FavoriteArticlesFragment" />
     <fragment
         android:id="@+id/myArticlesFragment"
         android:name="com.example.blogster.ui.articles.MyArticlesFragment"
-        android:label="MyArticlesFragment" >
-        <action
-            android:id="@+id/action_myArticlesFragment_to_articleDetailsFragment"
-            app:destination="@id/articleDetailsFragment" />
-    </fragment>
+        android:label="MyArticlesFragment" />
+
+    <action android:id="@+id/action_global_details_Fragment"
+        app:destination="@id/articleDetailsFragment"/>
+
 </navigation>

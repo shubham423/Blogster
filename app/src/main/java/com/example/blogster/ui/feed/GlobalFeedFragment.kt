@@ -6,10 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentGlobalFeedBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +16,7 @@ class GlobalFeedFragment : Fragment() {
     private lateinit var binding: FragmentGlobalFeedBinding
     private lateinit var articleFeedAdapter: ArticleFeedAdapter
     private val viewModel: FeedViewModel by activityViewModels()
+    private var callback: ArticleDetailsCallback?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +24,7 @@ class GlobalFeedFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentGlobalFeedBinding.inflate(layoutInflater)
+        callback = activity as ArticleDetailsCallback
         return binding.root
     }
 
@@ -55,8 +54,7 @@ class GlobalFeedFragment : Fragment() {
     }
 
     private fun openArticle(articleId: String) {
-        val action=GlobalFeedFragmentDirections.actionGlobalFeedFragmentToArticleDetailsFragment(articleId)
-        findNavController().navigate(action)
+        callback?.onArticleClicked(articleId)
     }
 
 }
