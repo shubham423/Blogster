@@ -75,7 +75,7 @@ class MyArticlesFragment : Fragment() {
         }
 
         viewModel.myArticlesResponse.observe(viewLifecycleOwner){
-            Log.d("FavoriteFragment1 error", "$it")
+            Log.d("FavoriteFragment1 slug", "${it.data?.get(0)?.slug}")
             when (it) {
                 is Resource.Success -> {
                     articleAdapter=ArticleFeedAdapter({openArticle(it)})

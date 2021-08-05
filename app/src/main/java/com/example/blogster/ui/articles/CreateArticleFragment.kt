@@ -28,7 +28,7 @@ class CreateArticleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding= FragmentCreateArticleBinding.inflate(layoutInflater)
+        binding = FragmentCreateArticleBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -40,11 +40,15 @@ class CreateArticleFragment : Fragment() {
     }
 
     private fun setUpObservers() {
-        viewModel.createArticleResponse.observe(viewLifecycleOwner){
+        viewModel.createArticleResponse.observe(viewLifecycleOwner) {
             Log.d("FavoriteFragment1 error", "$it")
             when (it) {
                 is Resource.Success -> {
-                    Toast.makeText(requireContext(), "post created successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "post created successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 is Resource.Error -> {
                     Log.d("FavoriteFragment1 error", "${it.message}")
@@ -58,16 +62,25 @@ class CreateArticleFragment : Fragment() {
 
     private fun setUpClickListeners() {
         binding.submitBtn.setOnClickListener {
-            val title=binding.titleEt.text.toString()
-            val bio=binding.bioEt.text.toString()
-            val body=binding.bodyEt.text.toString()
+            val title = binding.titleEt.text.toString()
+            val bio = binding.bioEt.text.toString()
+            val body = binding.bodyEt.text.toString()
 
             val preferences =
                 requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-            val token=preferences.getString("TOKEN", null)
+            val token = preferences.getString("TOKEN", null)
 
             if (token != null) {
-                viewModel.createArticle(ArticleCreateRequest(article = ArticleCreateRequest.Article(body,bio,title = title,tagList = listOf("angular","react"))),token)
+                viewModel.createArticle(
+                    ArticleCreateRequest(
+                        article = ArticleCreateRequest.Article(
+                            body,
+                            bio,
+                            title = title,
+                            tagList = listOf("angular", "react")
+                        )
+                    ), token
+                )
             }
         }
     }

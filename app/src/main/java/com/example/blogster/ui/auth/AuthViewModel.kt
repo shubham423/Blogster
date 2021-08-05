@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.blogster.data.remote.Resource
-import com.example.blogster.data.remote.responses.Article
-import com.example.blogster.data.remote.responses.ArticleCreateRequest
-import com.example.blogster.data.remote.responses.ArticleResponse
-import com.example.blogster.data.remote.responses.User
+import com.example.blogster.data.remote.responses.*
 import com.example.blogster.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,6 +27,9 @@ class AuthViewModel @Inject constructor(
 
     private val _createArticleResponse = MutableLiveData<Resource<Article>>()
     val createArticleResponse: MutableLiveData<Resource<Article>> = _createArticleResponse
+
+    private val _articleCommentsResponse = MutableLiveData<Resource<List<Comment>>>()
+    val articleCommentsResponse: MutableLiveData<Resource<List<Comment>>> = _articleCommentsResponse
 
 
     fun loginUser(email: String, password: String) {
@@ -89,7 +89,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun getFavoriteArticles(token: String, username: String) = viewModelScope.launch {
-        val response = mainRepository.getFavoriteArticles(token,username)
+        val response = mainRepository.getFavoriteArticles(token, username)
 
         if (response.isSuccessful) {
             _articlesResponse.postValue(Resource.Success(response.body()?.articles!!))
@@ -99,7 +99,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun getMyArticles(token: String, username: String) = viewModelScope.launch {
-        val response = mainRepository.getMyArticles(token,username)
+        val response = mainRepository.getMyArticles(token, username)
 
         if (response.isSuccessful) {
             _myArticlesResponse.postValue(Resource.Success(response.body()?.articles!!))
@@ -109,13 +109,24 @@ class AuthViewModel @Inject constructor(
     }
 
 
-    fun createArticle(articleCreateRequest: ArticleCreateRequest,token: String) = viewModelScope.launch {
-        val response = mainRepository.createArticle(articleCreateRequest,token)
+    fun createArticle(articleCreateRequest: ArticleCreateRequest, token: String) =
+        viewModelScope.launch {
+            val response = mainRepository.createArticle(articleCreateRequest, token)
+
+            if (response.isSuccessful) {
+                _createArticleResponse.postValue(Resource.Success(response.body()?.article!!))
+            } else {
+                _myArticlesResponse.postValue(Resource.Error(response.message()))
+            }
+        }
+
+    fun getArticleComments(slug: String, token: String) = viewModelScope.launch {
+        val response = mainRepository.getArticleComments(slug, token)
 
         if (response.isSuccessful) {
-            _createArticleResponse.postValue(Resource.Success(response.body()?.article!!))
+            _articleCommentsResponse.postValue(Resource.Success(response.body()?.comments!!))
         } else {
-            _myArticlesResponse.postValue(Resource.Error(response.message()))
+            _articleCommentsResponse.postValue(Resource.Error(response.message()))
         }
     }
 }

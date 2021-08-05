@@ -66,7 +66,10 @@ class MainRepository @Inject constructor(private val api: ConduitApi,private val
         return api.getArticleBySlug(articleId)
     }
 
-
+    suspend fun getArticleComments(slug: String,token: String): Response<CommentsResponse>{
+        AppModule.authToken = token
+        return conduitAuthApi.getArticleComments(slug)
+    }
 
 
 }

@@ -51,4 +51,17 @@ interface ConduitAuthApi {
     suspend fun unfavoriteArticle(
         @Path("slug") slug: String
     ): Response<ArticleResponse>
+
+
+    @POST("articles/{slug}/favorite")
+    suspend fun favoriteArticle(
+        @Path("slug") slug: String
+    ): Response<ArticleResponse>
+
+    @GET("articles/{slug}/comments")
+    suspend fun getArticleComments(
+        @Path("slug") slug: String
+    ): Response<CommentsResponse>
+
+
 }
