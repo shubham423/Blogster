@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.blogster.data.remote.responses.Comment
 import com.example.blogster.databinding.ItemCommentBinding
 
@@ -23,6 +24,8 @@ class CommentsAdapter() :
     inner class CommentViewHolder(val binding : ItemCommentBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(comment: Comment) {
             binding.commentTv.text=comment.body
+            binding.nameTv.text=comment.author.username
+            binding.profileIv.load(comment.author.image)
         }
     }
 
