@@ -13,7 +13,7 @@
         android:layout_height="33dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:src="@drawable/ic_profile_default" />
 
     <TextView
         android:id="@+id/titleTextView"

@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/myFeedFragment"
         android:name="com.example.blogster.ui.feed.MyFeedFragment"
-        android:label="fragment_global_feed"
+        android:label="My Feed"
         tools:layout="@layout/fragment_global_feed" />
     <fragment
         android:id="@+id/globalFeedFragment"
@@ -37,8 +37,8 @@
     <fragment
         android:id="@+id/articleDetailsFragment"
         android:name="com.example.blogster.ui.details.ArticleDetailsFragment"
-        android:label="fragment_article_details"
-        tools:layout="@layout/fragment_article_details" >
+        android:label="Details"
+        tools:layout="@layout/fragment_article_details">
         <argument
             android:name="articleId"
             app:argType="string" />
@@ -54,5 +54,9 @@
 
     <action android:id="@+id/action_global_details_Fragment"
         app:destination="@id/articleDetailsFragment"/>
+    <fragment
+        android:id="@+id/myArticlesDetailsFragment"
+        android:name="com.example.blogster.ui.details.MyArticlesDetailsFragment"
+        android:label="MyArticlesDetailsFragment" /><action android:id="@+id/action_global_myArticlesDetailsFragment" app:destination="@id/myArticlesDetailsFragment"/>
 
 </navigation>

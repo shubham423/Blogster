@@ -1,11 +1,14 @@
 package com.example.blogster.ui.feed
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.transform.CircleCropTransformation
+import com.example.blogster.R
 import com.example.blogster.data.remote.responses.Article
 import com.example.blogster.databinding.ItemArticleBinding
 
@@ -38,8 +41,12 @@ class ArticleFeedAdapter(val onArticleClicked: (slug: String) -> Unit) :
             titleTextView.text = article.title
             bodySnippetTextView.text = article.body
             dateTextView.text=article.createdAt
-            avatarImageView.load(article.author.image)
+            Log.d("feedadapter",article.author.image)
 
+                avatarImageView.load(article.author.image){
+                    placeholder(R.drawable.ic_profile_default)
+                    transformations(CircleCropTransformation())
+                }
             root.setOnClickListener { onArticleClicked(article.slug) }
         }
 

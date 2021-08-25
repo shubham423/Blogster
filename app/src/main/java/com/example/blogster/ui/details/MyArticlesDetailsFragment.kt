@@ -8,29 +8,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentArticleDetailsBinding
+import com.example.blogster.databinding.FragmentMyArticleDetailsBinding
+import com.example.blogster.databinding.FragmentMyArticlesBinding
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.FeedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ArticleDetailsFragment : Fragment() {
+class MyArticlesDetailsFragment : Fragment() {
 
-    private var _binding: FragmentArticleDetailsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentMyArticleDetailsBinding
 
     private val viewModel: FeedViewModel by activityViewModels()
     private val authViewModel: AuthViewModel by activityViewModels()
     private lateinit var commentsAdapter: CommentsAdapter
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentArticleDetailsBinding.inflate(layoutInflater)
+    ): View? {
+        binding = FragmentMyArticleDetailsBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -44,7 +46,6 @@ class ArticleDetailsFragment : Fragment() {
         }
         setUpObservers()
     }
-
     private fun setUpObservers() {
         viewModel.articleDetailResponse.observe(viewLifecycleOwner) {
             Log.d("ArticleDetails ", "${it.data}")
@@ -95,10 +96,5 @@ class ArticleDetailsFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding=null
     }
 }

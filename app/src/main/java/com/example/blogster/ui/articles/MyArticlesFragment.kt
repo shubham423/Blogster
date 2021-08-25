@@ -16,6 +16,7 @@ import com.example.blogster.databinding.FragmentMyArticlesBinding
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.ArticleDetailsCallback
 import com.example.blogster.ui.feed.ArticleFeedAdapter
+import com.example.blogster.ui.feed.MyArticleDetailsCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +26,7 @@ class MyArticlesFragment : Fragment() {
     private val viewModel: AuthViewModel by activityViewModels()
     private lateinit var articleAdapter: ArticleFeedAdapter
 
-    private var callback: ArticleDetailsCallback?=null
+    private var callback: MyArticleDetailsCallback?=null
 
     private var token : String?=null
     private var username : String?=null
@@ -36,7 +37,7 @@ class MyArticlesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding= FragmentMyArticlesBinding.inflate(layoutInflater)
-        callback=activity as ArticleDetailsCallback
+        callback=activity as MyArticleDetailsCallback
         return binding.root
     }
 
@@ -74,11 +75,11 @@ class MyArticlesFragment : Fragment() {
             }
         }
 
-        viewModel.myArticlesResponse.observe(viewLifecycleOwner){
+        viewModel.myArticlesResponse.observe(viewLifecycleOwner){ it ->
             Log.d("FavoriteFragment1 slug", "${it.data?.get(0)?.slug}")
             when (it) {
                 is Resource.Success -> {
-                    articleAdapter=ArticleFeedAdapter({openArticle(it)})
+                    articleAdapter=ArticleFeedAdapter { openArticle(it) }
                     binding.myArticlesRecyclerView.adapter=articleAdapter
                     articleAdapter.submitList(it.data)
                 }
@@ -100,7 +101,7 @@ class MyArticlesFragment : Fragment() {
     }
 
     private fun openArticle(articleId: String) {
-        callback?.onArticleClicked(articleId)
+        callback?.onMyArticleClicked(articleId)
     }
 
 }

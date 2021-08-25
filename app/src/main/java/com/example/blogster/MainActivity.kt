@@ -18,12 +18,13 @@ import com.example.blogster.databinding.ActivityMainBinding
 import com.example.blogster.ui.auth.AuthActivity
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.ArticleDetailsCallback
+import com.example.blogster.ui.feed.MyArticleDetailsCallback
 import com.example.blogster.utils.Constants.LOG_OUT
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(),ArticleDetailsCallback {
+class MainActivity : AppCompatActivity(),ArticleDetailsCallback, MyArticleDetailsCallback {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private val authViewModel: AuthViewModel by viewModels()
@@ -34,13 +35,14 @@ class MainActivity : AppCompatActivity(),ArticleDetailsCallback {
         setContentView(binding.root)
 
         navController = findNavController(R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.feedFragment,
-                R.id.articlesFragment,
-                R.id.profileFragment
-            )
-        )
+
+        val appBarConfiguration = AppBarConfiguration.Builder(
+            R.id.feedFragment,
+            R.id.articlesFragment,
+            R.id.profileFragment,
+            R.id.createArticleFragment
+        ).build()
+
         binding.bottomNav.setupWithNavController(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -81,6 +83,16 @@ class MainActivity : AppCompatActivity(),ArticleDetailsCallback {
         Log.d("FeedFragment","callback called")
         navController.navigate(
             R.id.action_global_details_Fragment,
+            bundleOf(
+                resources.getString(R.string.arg_article_id) to articleId
+            )
+        )
+    }
+
+    override fun onMyArticleClicked(articleId: String) {
+        Log.d("FeedFragment","callback called")
+        navController.navigate(
+            R.id.action_global_myArticlesDetailsFragment,
             bundleOf(
                 resources.getString(R.string.arg_article_id) to articleId
             )

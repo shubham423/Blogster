@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.transform.CircleCropTransformation
+import com.example.blogster.R
 import com.example.blogster.data.remote.responses.Comment
 import com.example.blogster.databinding.ItemCommentBinding
 
@@ -25,7 +27,10 @@ class CommentsAdapter() :
         fun bind(comment: Comment) {
             binding.commentTv.text=comment.body
             binding.nameTv.text=comment.author.username
-            binding.profileIv.load(comment.author.image)
+            binding.profileIv.load(comment.author.image){
+                placeholder(R.drawable.ic_profile_default)
+                transformations(CircleCropTransformation())
+            }
         }
     }
 
