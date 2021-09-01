@@ -26,7 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class FavoriteArticlesFragment : Fragment() {
 
     private lateinit var binding: FragmentFavoriteArticlesBinding
-    private val viewModel : AuthViewModel by activityViewModels()
+    private val viewModelArticles : ArticlesViewModel by activityViewModels()
+    private val viewModelAuth : AuthViewModel by activityViewModels()
     private lateinit var articleAdapter: ArticleFeedAdapter
     private var callback: ArticleDetailsCallback?=null
 
@@ -49,19 +50,19 @@ class FavoriteArticlesFragment : Fragment() {
         token=preferences.getString("TOKEN", null)
 
         if (token != null) {
-            viewModel.getCurrentUser(token!!)
+            viewModelAuth.getCurrentUser(token!!)
             Log.d("FavoriteArticlesFrag", "###################### $token")
         }
         setupObservers()
     }
 
     private fun setupObservers() {
-        viewModel.userResponse.observe(viewLifecycleOwner){
+        viewModelAuth.userResponse.observe(viewLifecycleOwner){
             Log.d("FavoriteFragment error", "${it}")
             when (it) {
                 is Resource.Success -> {
                     it.data?.username?.let { it1 -> token?.let { it2 ->
-                        viewModel.getFavoriteArticles(
+                        viewModelArticles.getFavoriteArticles(
                             it2, it1)
                     } }
                 }
@@ -74,11 +75,11 @@ class FavoriteArticlesFragment : Fragment() {
             }
         }
 
-        viewModel.articlesResponse.observe(viewLifecycleOwner){
+        viewModelArticles.articlesResponse.observe(viewLifecycleOwner){
             Log.d("FavoriteFragment1 error", "$it")
             when (it) {
                 is Resource.Success -> {
-                    articleAdapter=ArticleFeedAdapter({openArticle(it)})
+                    articleAdapter=ArticleFeedAdapter { openArticle(it) }
                     binding.favoriteRecyclerView.adapter=articleAdapter
                     articleAdapter.submitList(it.data)
                 }

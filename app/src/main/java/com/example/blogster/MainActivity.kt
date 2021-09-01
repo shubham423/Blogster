@@ -15,16 +15,16 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.blogster.databinding.ActivityMainBinding
+import com.example.blogster.ui.articles.MyArticleDetailsCallback
 import com.example.blogster.ui.auth.AuthActivity
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.ArticleDetailsCallback
-import com.example.blogster.ui.feed.MyArticleDetailsCallback
 import com.example.blogster.utils.Constants.LOG_OUT
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(),ArticleDetailsCallback, MyArticleDetailsCallback {
+class MainActivity : AppCompatActivity(),ArticleDetailsCallback,MyArticleDetailsCallback {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private val authViewModel: AuthViewModel by viewModels()
@@ -78,9 +78,11 @@ class MainActivity : AppCompatActivity(),ArticleDetailsCallback, MyArticleDetail
         return true
     }
 
+
     override fun onArticleClicked(articleId: String) {
 
         Log.d("FeedFragment","callback called")
+        navController.popBackStack(R.id.myArticlesDetailsFragment,true)
         navController.navigate(
             R.id.action_global_details_Fragment,
             bundleOf(
@@ -90,7 +92,7 @@ class MainActivity : AppCompatActivity(),ArticleDetailsCallback, MyArticleDetail
     }
 
     override fun onMyArticleClicked(articleId: String) {
-        Log.d("FeedFragment","callback called")
+        Log.d("MyFeedFragment","callback called")
         navController.navigate(
             R.id.action_global_myArticlesDetailsFragment,
             bundleOf(
@@ -98,5 +100,6 @@ class MainActivity : AppCompatActivity(),ArticleDetailsCallback, MyArticleDetail
             )
         )
     }
+
 
 }

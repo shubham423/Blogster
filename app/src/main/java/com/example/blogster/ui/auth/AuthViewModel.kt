@@ -19,17 +19,7 @@ class AuthViewModel @Inject constructor(
     private val _userResponse = MutableLiveData<Resource<User>?>()
     val userResponse: MutableLiveData<Resource<User>?> = _userResponse
 
-    private val _articlesResponse = MutableLiveData<Resource<List<Article>>>()
-    val articlesResponse: MutableLiveData<Resource<List<Article>>> = _articlesResponse
 
-    private val _myArticlesResponse = MutableLiveData<Resource<List<Article>>>()
-    val myArticlesResponse: MutableLiveData<Resource<List<Article>>> = _myArticlesResponse
-
-    private val _createArticleResponse = MutableLiveData<Resource<Article>>()
-    val createArticleResponse: MutableLiveData<Resource<Article>> = _createArticleResponse
-
-    private val _articleCommentsResponse = MutableLiveData<Resource<List<Comment>>>()
-    val articleCommentsResponse: MutableLiveData<Resource<List<Comment>>> = _articleCommentsResponse
 
 
     fun loginUser(email: String, password: String) {
@@ -88,45 +78,4 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun getFavoriteArticles(token: String, username: String) = viewModelScope.launch {
-        val response = mainRepository.getFavoriteArticles(token, username)
-
-        if (response.isSuccessful) {
-            _articlesResponse.postValue(Resource.Success(response.body()?.articles!!))
-        } else {
-            _userResponse.postValue(Resource.Error(response.message()))
-        }
-    }
-
-    fun getMyArticles(token: String, username: String) = viewModelScope.launch {
-        val response = mainRepository.getMyArticles(token, username)
-
-        if (response.isSuccessful) {
-            _myArticlesResponse.postValue(Resource.Success(response.body()?.articles!!))
-        } else {
-            _myArticlesResponse.postValue(Resource.Error(response.message()))
-        }
-    }
-
-
-    fun createArticle(articleCreateRequest: ArticleCreateRequest, token: String) =
-        viewModelScope.launch {
-            val response = mainRepository.createArticle(articleCreateRequest, token)
-
-            if (response.isSuccessful) {
-                _createArticleResponse.postValue(Resource.Success(response.body()?.article!!))
-            } else {
-                _myArticlesResponse.postValue(Resource.Error(response.message()))
-            }
-        }
-
-    fun getArticleComments(slug: String, token: String) = viewModelScope.launch {
-        val response = mainRepository.getArticleComments(slug, token)
-
-        if (response.isSuccessful) {
-            _articleCommentsResponse.postValue(Resource.Success(response.body()?.comments!!))
-        } else {
-            _articleCommentsResponse.postValue(Resource.Error(response.message()))
-        }
-    }
 }

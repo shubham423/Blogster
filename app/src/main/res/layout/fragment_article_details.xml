@@ -75,5 +75,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
+        tools:listitem="@layout/item_comment"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </LinearLayout>

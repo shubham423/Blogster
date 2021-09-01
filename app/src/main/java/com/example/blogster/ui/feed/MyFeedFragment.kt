@@ -66,11 +66,7 @@ class MyFeedFragment : Fragment() {
     }
 
 }
-
 interface ArticleDetailsCallback {
     fun onArticleClicked(articleId: String)
 }
 
-interface MyArticleDetailsCallback {
-    fun onMyArticleClicked(articleId: String)
-}

@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentArticleDetailsBinding
 import com.example.blogster.databinding.FragmentMyArticleDetailsBinding
 import com.example.blogster.databinding.FragmentMyArticlesBinding
+import com.example.blogster.ui.articles.ArticlesViewModel
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.FeedViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +26,7 @@ class MyArticlesDetailsFragment : Fragment() {
     private lateinit var binding: FragmentMyArticleDetailsBinding
 
     private val viewModel: FeedViewModel by activityViewModels()
-    private val authViewModel: AuthViewModel by activityViewModels()
+    private val authViewModel: ArticlesViewModel by activityViewModels()
     private lateinit var commentsAdapter: CommentsAdapter
 
     override fun onCreateView(
@@ -83,7 +85,6 @@ class MyArticlesDetailsFragment : Fragment() {
                 is Resource.Success -> {
                     Log.d("ArticleDetails list", "${it.data!!}")
                     commentsAdapter = CommentsAdapter()
-                    binding.commentRv.visibility=View.VISIBLE
                     binding.commentRv.adapter = commentsAdapter
                     commentsAdapter.submitList(it.data)
                 }
@@ -96,5 +97,11 @@ class MyArticlesDetailsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("MyArticleOnDestroy","on destroy called")
+        binding.root.visibility=View.INVISIBLE
     }
 }

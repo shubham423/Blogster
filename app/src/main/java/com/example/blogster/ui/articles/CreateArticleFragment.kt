@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateArticleFragment : Fragment() {
 
     private lateinit var binding: FragmentCreateArticleBinding
-    private val viewModel: AuthViewModel by activityViewModels()
+    private val viewModel: ArticlesViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

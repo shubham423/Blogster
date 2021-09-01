@@ -3,27 +3,23 @@ package com.example.blogster.ui.articles
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
-import com.example.blogster.databinding.FragmentFavoriteArticlesBinding
 import com.example.blogster.databinding.FragmentMyArticlesBinding
 import com.example.blogster.ui.auth.AuthViewModel
-import com.example.blogster.ui.feed.ArticleDetailsCallback
 import com.example.blogster.ui.feed.ArticleFeedAdapter
-import com.example.blogster.ui.feed.MyArticleDetailsCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MyArticlesFragment : Fragment() {
 
     private lateinit var binding: FragmentMyArticlesBinding
-    private val viewModel: AuthViewModel by activityViewModels()
+    private val viewModelArticles: ArticlesViewModel by activityViewModels()
+    private val viewModelAuth: AuthViewModel by activityViewModels()
     private lateinit var articleAdapter: ArticleFeedAdapter
 
     private var callback: MyArticleDetailsCallback?=null
@@ -48,21 +44,21 @@ class MyArticlesFragment : Fragment() {
         token=preferences.getString("TOKEN", null)
 
         if (token != null) {
-            viewModel.getCurrentUser(token!!)
+            viewModelAuth.getCurrentUser(token!!)
             Log.d("MyArticlesFrag", "###################### $token")
         }
         setupObservers()
     }
 
     private fun setupObservers() {
-        viewModel.userResponse.observe(viewLifecycleOwner){
+        viewModelAuth.userResponse.observe(viewLifecycleOwner){
             Log.d("MyArticlesFrag error", "$it")
             when (it) {
                 is Resource.Success -> {
                     it.data?.username?.let { it1 ->
                         username=it1
                         token?.let { it2 ->
-                        viewModel.getMyArticles(
+                        viewModelArticles.getMyArticles(
                             it2, it1)
                     } }
                 }
@@ -75,7 +71,7 @@ class MyArticlesFragment : Fragment() {
             }
         }
 
-        viewModel.myArticlesResponse.observe(viewLifecycleOwner){ it ->
+        viewModelArticles.myArticlesResponse.observe(viewLifecycleOwner){ it ->
             Log.d("FavoriteFragment1 slug", "${it.data?.get(0)?.slug}")
             when (it) {
                 is Resource.Success -> {
@@ -97,11 +93,15 @@ class MyArticlesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.d("onResume","token $token and $username ")
-        token?.let { username?.let { it1 -> viewModel.getMyArticles(it, it1) } }
+        token?.let { username?.let { it1 -> viewModelArticles.getMyArticles(it, it1) } }
     }
 
     private fun openArticle(articleId: String) {
         callback?.onMyArticleClicked(articleId)
     }
+}
 
+
+interface MyArticleDetailsCallback {
+    fun onMyArticleClicked(articleId: String)
 }

@@ -48,5 +48,4 @@ class FeedFragment : Fragment() {
         }.attach()
 
     }
-
 }

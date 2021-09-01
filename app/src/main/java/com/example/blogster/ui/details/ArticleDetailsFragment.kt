@@ -13,6 +13,7 @@ import coil.load
 import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentArticleDetailsBinding
+import com.example.blogster.ui.articles.ArticlesViewModel
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.FeedViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +25,7 @@ class ArticleDetailsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: FeedViewModel by activityViewModels()
-    private val authViewModel: AuthViewModel by activityViewModels()
+    private val authViewModel: ArticlesViewModel by activityViewModels()
     private lateinit var commentsAdapter: CommentsAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
