@@ -15,6 +15,8 @@ import com.example.blogster.MainActivity
 import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentLoginBinding
+import com.example.blogster.utils.Constants.TOKEN
+import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,9 +54,12 @@ class LoginFragment : Fragment() {
                     ).show()
 
                     val token = it.data?.token
-                    val preferences =
-                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-                    preferences.edit().putString("TOKEN", token).apply()
+//                    val preferences =
+//                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
+//                    preferences.edit().putString("TOKEN", token).apply()
+                    if (token != null) {
+                        PrefsHelper.write(TOKEN,token)
+                    }
 
                     startActivity(Intent(requireContext(), MainActivity::class.java)).also {
                         requireActivity().finish()

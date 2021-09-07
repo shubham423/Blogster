@@ -16,6 +16,8 @@ import com.example.blogster.data.remote.responses.ArticleCreateRequest
 import com.example.blogster.databinding.FragmentCreateArticleBinding
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.ArticleFeedAdapter
+import com.example.blogster.utils.Constants.TOKEN
+import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -66,9 +68,11 @@ class CreateArticleFragment : Fragment() {
             val bio = binding.bioEt.text.toString()
             val body = binding.bodyEt.text.toString()
 
-            val preferences =
-                requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-            val token = preferences.getString("TOKEN", null)
+//            val preferences =
+//                requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
+//            val token = preferences.getString("TOKEN", null)
+
+            val token=PrefsHelper.read(TOKEN,null)
 
             if (token != null) {
                 viewModel.createArticle(

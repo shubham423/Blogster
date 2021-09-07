@@ -16,6 +16,8 @@ import com.example.blogster.databinding.FragmentArticleDetailsBinding
 import com.example.blogster.ui.articles.ArticlesViewModel
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.FeedViewModel
+import com.example.blogster.utils.Constants.TOKEN
+import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +29,7 @@ class ArticleDetailsFragment : Fragment() {
     private val viewModel: FeedViewModel by activityViewModels()
     private val authViewModel: ArticlesViewModel by activityViewModels()
     private lateinit var commentsAdapter: CommentsAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,10 +59,11 @@ class ArticleDetailsFragment : Fragment() {
                     binding.authorTextView.text = it.data?.author?.username
                     binding.dateTextView.text = it.data?.createdAt
                     binding.avatarImageView.load(it.data?.author?.image)
-
-                    val preferences =
-                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-                    val token = preferences.getString("TOKEN", null)
+//
+//                    val preferences =
+//                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
+//                    val token = preferences.getString("TOKEN", null)
+                    val token=PrefsHelper.read(TOKEN,null)
 
                     if (token != null) {
                         it.data?.let { it1 -> authViewModel.getArticleComments(it1.slug,token) }

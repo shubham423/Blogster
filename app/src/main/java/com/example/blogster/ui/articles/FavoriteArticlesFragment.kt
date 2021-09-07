@@ -20,6 +20,8 @@ import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.ArticleDetailsCallback
 import com.example.blogster.ui.feed.ArticleFeedAdapter
 import com.example.blogster.ui.feed.GlobalFeedFragmentDirections
+import com.example.blogster.utils.Constants.TOKEN
+import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,9 +47,10 @@ class FavoriteArticlesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val preferences =
-            requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-        token=preferences.getString("TOKEN", null)
+//        val preferences =
+//            requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
+//        token=preferences.getString("TOKEN", null)
+        token=PrefsHelper.read(TOKEN,null)
 
         if (token != null) {
             viewModelAuth.getCurrentUser(token!!)

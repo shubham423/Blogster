@@ -13,6 +13,8 @@ import androidx.fragment.app.activityViewModels
 import com.example.blogster.MainActivity
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentSignUpBinding
+import com.example.blogster.utils.Constants.TOKEN
+import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -50,13 +52,13 @@ class SignUpFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    //Save token here
-
-                    //Save token here
                     val token = it.data?.token
-                    val preferences =
-                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-                    preferences.edit().putString("TOKEN", token).apply()
+//                    val preferences =
+//                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
+//                    preferences.edit().putString("TOKEN", token).apply()
+                    if (token != null) {
+                        PrefsHelper.write(TOKEN,token)
+                    }
 
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                 }

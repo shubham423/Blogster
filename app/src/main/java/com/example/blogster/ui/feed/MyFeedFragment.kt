@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentMyFeedBinding
+import com.example.blogster.utils.Constants
+import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,10 +33,12 @@ class MyFeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//
+//        val preferences =
+//            requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
+//        val token = preferences.getString("TOKEN", null)
 
-        val preferences =
-            requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-        val token = preferences.getString("TOKEN", null)
+        val token= PrefsHelper.read(Constants.TOKEN,null)
 
         if (token != null) {
             viewModel.fetchMyFeed(token)

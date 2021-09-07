@@ -18,6 +18,8 @@ import com.example.blogster.databinding.FragmentMyArticlesBinding
 import com.example.blogster.ui.articles.ArticlesViewModel
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.FeedViewModel
+import com.example.blogster.utils.Constants
+import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,10 +60,11 @@ class MyArticlesDetailsFragment : Fragment() {
                     binding.authorTextView.text = it.data?.author?.username
                     binding.dateTextView.text = it.data?.createdAt
                     binding.avatarImageView.load(it.data?.author?.image)
-
-                    val preferences =
-                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-                    val token = preferences.getString("TOKEN", null)
+//
+//                    val preferences =
+//                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
+//                    val token = preferences.getString("TOKEN", null)
+                    val token= PrefsHelper.read(Constants.TOKEN,null)
 
                     if (token != null) {
                         it.data?.let { it1 -> authViewModel.getArticleComments(it1.slug,token) }
