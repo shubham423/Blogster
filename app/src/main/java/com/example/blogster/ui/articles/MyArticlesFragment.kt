@@ -22,18 +22,18 @@ class MyArticlesFragment : Fragment() {
     private val viewModelAuth: AuthViewModel by activityViewModels()
     private lateinit var articleAdapter: ArticleFeedAdapter
 
-    private var callback: MyArticleDetailsCallback?=null
+    private var callback: MyArticleDetailsCallback? = null
 
-    private var token : String?=null
-    private var username : String?=null
+    private var token: String? = null
+    private var username: String? = null
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding= FragmentMyArticlesBinding.inflate(layoutInflater)
-        callback=activity as MyArticleDetailsCallback
+        binding = FragmentMyArticlesBinding.inflate(layoutInflater)
+        callback = activity as MyArticleDetailsCallback
         return binding.root
     }
 
@@ -41,7 +41,7 @@ class MyArticlesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val preferences =
             requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-        token=preferences.getString("TOKEN", null)
+        token = preferences.getString("TOKEN", null)
 
         if (token != null) {
             viewModelAuth.getCurrentUser(token!!)
@@ -51,16 +51,18 @@ class MyArticlesFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModelAuth.userResponse.observe(viewLifecycleOwner){
+        viewModelAuth.userResponse.observe(viewLifecycleOwner) {
             Log.d("MyArticlesFrag error", "$it")
             when (it) {
                 is Resource.Success -> {
                     it.data?.username?.let { it1 ->
-                        username=it1
+                        username = it1
                         token?.let { it2 ->
-                        viewModelArticles.getMyArticles(
-                            it2, it1)
-                    } }
+                            viewModelArticles.getMyArticles(
+                                it2, it1
+                            )
+                        }
+                    }
                 }
                 is Resource.Error -> {
                     Log.d("MyArticlesFrag error", "${it.message}")
@@ -71,12 +73,12 @@ class MyArticlesFragment : Fragment() {
             }
         }
 
-        viewModelArticles.myArticlesResponse.observe(viewLifecycleOwner){ it ->
+        viewModelArticles.myArticlesResponse.observe(viewLifecycleOwner) { it ->
             Log.d("FavoriteFragment1 slug", "${it.data?.get(0)?.slug}")
             when (it) {
                 is Resource.Success -> {
-                    articleAdapter=ArticleFeedAdapter { openArticle(it) }
-                    binding.myArticlesRecyclerView.adapter=articleAdapter
+                    articleAdapter = ArticleFeedAdapter { openArticle(it) }
+                    binding.myArticlesRecyclerView.adapter = articleAdapter
                     articleAdapter.submitList(it.data)
                 }
                 is Resource.Error -> {
@@ -92,7 +94,7 @@ class MyArticlesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("onResume","token $token and $username ")
+        Log.d("onResume", "token $token and $username ")
         token?.let { username?.let { it1 -> viewModelArticles.getMyArticles(it, it1) } }
     }
 

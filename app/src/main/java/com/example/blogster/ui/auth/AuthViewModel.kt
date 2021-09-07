@@ -19,9 +19,6 @@ class AuthViewModel @Inject constructor(
     private val _userResponse = MutableLiveData<Resource<User>?>()
     val userResponse: MutableLiveData<Resource<User>?> = _userResponse
 
-
-
-
     fun loginUser(email: String, password: String) {
         _userResponse.postValue(Resource.Loading())
         viewModelScope.launch {

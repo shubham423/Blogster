@@ -1,5 +1,7 @@
 package com.example.blogster.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.blogster.ConduitApp
 import com.example.blogster.data.remote.api.ConduitApi
@@ -7,6 +9,7 @@ import com.example.blogster.data.remote.api.ConduitAuthApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

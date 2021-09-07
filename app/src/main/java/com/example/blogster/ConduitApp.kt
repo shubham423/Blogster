@@ -1,6 +1,7 @@
 package com.example.blogster
 
 import android.app.Application
+import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
