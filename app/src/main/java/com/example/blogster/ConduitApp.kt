@@ -6,11 +6,9 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class ConduitApp : Application() {
-
     init {
         instance = this
     }
-
     companion object {
         private var instance: ConduitApp? = null
         fun applicationContext(): ConduitApp {

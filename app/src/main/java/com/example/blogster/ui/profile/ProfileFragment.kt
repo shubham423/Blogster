@@ -1,17 +1,12 @@
 package com.example.blogster.ui.profile
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.blogster.MainActivity
-import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentProfileBinding
 import com.example.blogster.ui.auth.AuthViewModel
