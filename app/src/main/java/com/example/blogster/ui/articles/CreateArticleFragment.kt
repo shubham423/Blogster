@@ -68,10 +68,6 @@ class CreateArticleFragment : Fragment() {
             val bio = binding.bioEt.text.toString()
             val body = binding.bodyEt.text.toString()
 
-//            val preferences =
-//                requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-//            val token = preferences.getString("TOKEN", null)
-
             val token=PrefsHelper.read(TOKEN,null)
 
             if (token != null) {

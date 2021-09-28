@@ -23,7 +23,7 @@ class AuthViewModel @Inject constructor(
         _userResponse.postValue(Resource.Loading())
         viewModelScope.launch {
             val response = mainRepository.loginUser(email, password)
-            Log.d("viewmodel", "${response} and $email")
+            Log.d("viewmodel", "$response and $email")
             if (response.isSuccessful) {
                 _userResponse.postValue(Resource.Success(response.body()?.user!!))
             } else {

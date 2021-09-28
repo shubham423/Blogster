@@ -50,6 +50,7 @@ class MyArticlesDetailsFragment : Fragment() {
         }
         setUpObservers()
     }
+
     private fun setUpObservers() {
         viewModel.articleDetailResponse.observe(viewLifecycleOwner) {
             Log.d("ArticleDetails ", "${it.data}")
@@ -60,14 +61,11 @@ class MyArticlesDetailsFragment : Fragment() {
                     binding.authorTextView.text = it.data?.author?.username
                     binding.dateTextView.text = it.data?.createdAt
                     binding.avatarImageView.load(it.data?.author?.image)
-//
-//                    val preferences =
-//                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-//                    val token = preferences.getString("TOKEN", null)
-                    val token= PrefsHelper.read(Constants.TOKEN,null)
+
+                    val token = PrefsHelper.read(Constants.TOKEN, null)
 
                     if (token != null) {
-                        it.data?.let { it1 -> authViewModel.getArticleComments(it1.slug,token) }
+                        it.data?.let { it1 -> authViewModel.getArticleComments(it1.slug, token) }
                         Log.d("Articles Details", "###################### $token")
                     }
 
@@ -104,7 +102,7 @@ class MyArticlesDetailsFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("MyArticleOnDestroy","on destroy called")
-        binding.root.visibility=View.INVISIBLE
+        Log.d("MyArticleOnDestroy", "on destroy called")
+        binding.root.visibility = View.INVISIBLE
     }
 }

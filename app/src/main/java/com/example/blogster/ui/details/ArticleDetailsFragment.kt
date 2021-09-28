@@ -59,10 +59,6 @@ class ArticleDetailsFragment : Fragment() {
                     binding.authorTextView.text = it.data?.author?.username
                     binding.dateTextView.text = it.data?.createdAt
                     binding.avatarImageView.load(it.data?.author?.image)
-//
-//                    val preferences =
-//                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-//                    val token = preferences.getString("TOKEN", null)
                     val token=PrefsHelper.read(TOKEN,null)
 
                     if (token != null) {

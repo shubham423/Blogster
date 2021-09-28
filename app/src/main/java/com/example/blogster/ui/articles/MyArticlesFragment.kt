@@ -45,7 +45,6 @@ class MyArticlesFragment : Fragment() {
 
         if (token != null) {
             viewModelAuth.getCurrentUser(token!!)
-            Log.d("MyArticlesFrag", "###################### $token")
         }
         setupObservers()
     }

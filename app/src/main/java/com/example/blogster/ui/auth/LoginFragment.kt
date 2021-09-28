@@ -54,9 +54,6 @@ class LoginFragment : Fragment() {
                     ).show()
 
                     val token = it.data?.token
-//                    val preferences =
-//                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-//                    preferences.edit().putString("TOKEN", token).apply()
                     if (token != null) {
                         PrefsHelper.write(TOKEN,token)
                     }

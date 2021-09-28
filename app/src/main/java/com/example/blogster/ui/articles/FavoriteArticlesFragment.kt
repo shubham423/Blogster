@@ -1,25 +1,17 @@
 package com.example.blogster.ui.articles
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.example.blogster.MainActivity
-import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
-import com.example.blogster.databinding.FragmentArticlesBinding
 import com.example.blogster.databinding.FragmentFavoriteArticlesBinding
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.ArticleDetailsCallback
 import com.example.blogster.ui.feed.ArticleFeedAdapter
-import com.example.blogster.ui.feed.GlobalFeedFragmentDirections
 import com.example.blogster.utils.Constants.TOKEN
 import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,14 +39,10 @@ class FavoriteArticlesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val preferences =
-//            requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-//        token=preferences.getString("TOKEN", null)
         token=PrefsHelper.read(TOKEN,null)
 
         if (token != null) {
             viewModelAuth.getCurrentUser(token!!)
-            Log.d("FavoriteArticlesFrag", "###################### $token")
         }
         setupObservers()
     }

@@ -28,7 +28,6 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -53,9 +52,6 @@ class SignUpFragment : Fragment() {
                     ).show()
 
                     val token = it.data?.token
-//                    val preferences =
-//                        requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-//                    preferences.edit().putString("TOKEN", token).apply()
                     if (token != null) {
                         PrefsHelper.write(TOKEN,token)
                     }
