@@ -25,6 +25,7 @@ class MainRepository @Inject constructor(private val api: ConduitApi,private val
 
     suspend fun getMyFeed(token: String): Response<ArticlesResponse> {
         AppModule.authToken=token
+
         Log.d("MainRepo", token)
         return conduitAuthApi.getFeedArticles()
     }

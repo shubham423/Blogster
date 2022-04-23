@@ -1,6 +1,5 @@
 package com.example.blogster.ui.details
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.blogster.R
 import com.example.blogster.data.remote.Resource
@@ -59,7 +57,7 @@ class ArticleDetailsFragment : Fragment() {
                     binding.authorTextView.text = it.data?.author?.username
                     binding.dateTextView.text = it.data?.createdAt
                     binding.avatarImageView.load(it.data?.author?.image)
-                    val token=PrefsHelper.read(TOKEN,null)
+                    val token= PrefsHelper.read(TOKEN,null)
 
                     if (token != null) {
                         it.data?.let { it1 -> authViewModel.getArticleComments(it1.slug,token) }

@@ -1,6 +1,5 @@
 package com.example.blogster.ui.feed
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater

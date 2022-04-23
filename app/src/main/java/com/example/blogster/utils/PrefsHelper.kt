@@ -3,6 +3,7 @@ package com.example.blogster.utils
 import android.content.Context
 import android.content.SharedPreferences
 
+
 object PrefsHelper {
 
     private lateinit var prefs: SharedPreferences
@@ -18,7 +19,7 @@ object PrefsHelper {
     }
 
     fun remove(key: String){
-       prefs.edit().remove(key).apply()
+        prefs.edit().remove(key).apply()
     }
 
     fun write(key: String, value: String) {

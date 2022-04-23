@@ -20,6 +20,7 @@ import com.example.blogster.ui.auth.AuthActivity
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.ArticleDetailsCallback
 import com.example.blogster.utils.Constants.LOG_OUT
+import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -33,7 +34,6 @@ class MainActivity : AppCompatActivity(),ArticleDetailsCallback,MyArticleDetails
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         navController = findNavController(R.id.nav_host_fragment)
 
         val appBarConfiguration = AppBarConfiguration.Builder(
@@ -49,12 +49,6 @@ class MainActivity : AppCompatActivity(),ArticleDetailsCallback,MyArticleDetails
         val preferences =
             this.getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
         val token=preferences.getString("TOKEN", null)
-
-        token.let {
-            authViewModel.getCurrentUser(it!!)
-        }
-
-
 
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

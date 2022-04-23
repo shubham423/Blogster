@@ -12,6 +12,8 @@ import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentMyArticlesBinding
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.ArticleFeedAdapter
+import com.example.blogster.utils.Constants
+import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,13 +23,10 @@ class MyArticlesFragment : Fragment() {
     private val viewModelArticles: ArticlesViewModel by activityViewModels()
     private val viewModelAuth: AuthViewModel by activityViewModels()
     private lateinit var articleAdapter: ArticleFeedAdapter
+    var username: String?=null
+    var token: String?=null
 
     private var callback: MyArticleDetailsCallback? = null
-
-    private var token: String? = null
-    private var username: String? = null
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,41 +38,16 @@ class MyArticlesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val preferences =
-            requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-        token = preferences.getString("TOKEN", null)
+        token = PrefsHelper.read(Constants.TOKEN,null)
+        username = PrefsHelper.read(Constants.USERNAME,null)
 
-        if (token != null) {
-            viewModelAuth.getCurrentUser(token!!)
-        }
+        viewModelArticles.getMyArticles(token!!,username!!)
         setupObservers()
     }
 
     private fun setupObservers() {
-        viewModelAuth.userResponse.observe(viewLifecycleOwner) {
-            Log.d("MyArticlesFrag error", "$it")
-            when (it) {
-                is Resource.Success -> {
-                    it.data?.username?.let { it1 ->
-                        username = it1
-                        token?.let { it2 ->
-                            viewModelArticles.getMyArticles(
-                                it2, it1
-                            )
-                        }
-                    }
-                }
-                is Resource.Error -> {
-                    Log.d("MyArticlesFrag error", "${it.message}")
-                }
-                else -> {
-                    Log.d("MyArticlesFrag else", "$it")
-                }
-            }
-        }
 
         viewModelArticles.myArticlesResponse.observe(viewLifecycleOwner) { it ->
-            Log.d("FavoriteFragment1 slug", "${it.data?.get(0)?.slug}")
             when (it) {
                 is Resource.Success -> {
                     articleAdapter = ArticleFeedAdapter { openArticle(it) }

@@ -13,6 +13,7 @@ import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.ArticleDetailsCallback
 import com.example.blogster.ui.feed.ArticleFeedAdapter
 import com.example.blogster.utils.Constants.TOKEN
+import com.example.blogster.utils.Constants.USERNAME
 import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +27,7 @@ class FavoriteArticlesFragment : Fragment() {
     private var callback: ArticleDetailsCallback?=null
 
     private var token : String?=null
+    private var userName : String?=null
 
 
     override fun onCreateView(
@@ -39,32 +41,13 @@ class FavoriteArticlesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        token=PrefsHelper.read(TOKEN,null)
-
-        if (token != null) {
-            viewModelAuth.getCurrentUser(token!!)
-        }
+        token= PrefsHelper.read(TOKEN,null)
+        userName= PrefsHelper.read(USERNAME,null)
+        viewModelArticles.getFavoriteArticles(token!!,userName!!)
         setupObservers()
     }
 
     private fun setupObservers() {
-        viewModelAuth.userResponse.observe(viewLifecycleOwner){
-            Log.d("FavoriteFragment error", "${it}")
-            when (it) {
-                is Resource.Success -> {
-                    it.data?.username?.let { it1 -> token?.let { it2 ->
-                        viewModelArticles.getFavoriteArticles(
-                            it2, it1)
-                    } }
-                }
-                is Resource.Error -> {
-                    Log.d("FavoriteFragment error", "${it.message}")
-                }
-                else -> {
-                    Log.d("FavoriteFragment else", "$it")
-                }
-            }
-        }
 
         viewModelArticles.articlesResponse.observe(viewLifecycleOwner){
             Log.d("FavoriteFragment1 error", "$it")

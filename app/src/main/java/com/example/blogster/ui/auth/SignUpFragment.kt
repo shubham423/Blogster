@@ -1,6 +1,5 @@
 package com.example.blogster.ui.auth
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +13,7 @@ import com.example.blogster.MainActivity
 import com.example.blogster.data.remote.Resource
 import com.example.blogster.databinding.FragmentSignUpBinding
 import com.example.blogster.utils.Constants.TOKEN
+import com.example.blogster.utils.Constants.USERNAME
 import com.example.blogster.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,8 +52,13 @@ class SignUpFragment : Fragment() {
                     ).show()
 
                     val token = it.data?.token
+                    val userName = it.data?.username
+                    Log.d("SignupFragment token", "$token")
                     if (token != null) {
                         PrefsHelper.write(TOKEN,token)
+                    }
+                    if (userName != null) {
+                        PrefsHelper.write(USERNAME,userName)
                     }
 
                     startActivity(Intent(requireContext(), MainActivity::class.java))
