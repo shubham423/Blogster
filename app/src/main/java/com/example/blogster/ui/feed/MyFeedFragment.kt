@@ -24,7 +24,6 @@ class MyFeedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentMyFeedBinding.inflate(layoutInflater)
         callback = activity as ArticleDetailsCallback
         return binding.root
@@ -32,11 +31,6 @@ class MyFeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//
-//        val preferences =
-//            requireActivity().getSharedPreferences("BLOGSTER", Context.MODE_PRIVATE)
-//        val token = preferences.getString("TOKEN", null)
-
         val token= PrefsHelper.read(Constants.TOKEN,null)
 
         if (token != null) {

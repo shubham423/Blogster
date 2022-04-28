@@ -71,7 +71,7 @@ object AppModule {
     @Named("Normal")
     fun provideRetrofitNormal(): Retrofit =
         Retrofit.Builder()
-            .baseUrl("https://conduit.productionready.io/api/")
+            .baseUrl("https://api.realworld.io/api/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
 
