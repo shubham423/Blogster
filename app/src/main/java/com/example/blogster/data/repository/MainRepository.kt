@@ -4,6 +4,10 @@ package com.example.blogster.data.repository
 import android.util.Log
 import com.example.blogster.data.remote.api.ConduitApi
 import com.example.blogster.data.remote.api.ConduitAuthApi
+import com.example.blogster.data.remote.requests.ArticleCreateRequest
+import com.example.blogster.data.remote.requests.LoginRequest
+import com.example.blogster.data.remote.requests.SignupRequest
+import com.example.blogster.data.remote.requests.UserUpdateRequest
 import com.example.blogster.data.remote.responses.*
 import com.example.blogster.di.AppModule
 import retrofit2.Response
@@ -12,11 +16,11 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(private val api: ConduitApi,private val conduitAuthApi: ConduitAuthApi) {
 
     suspend fun loginUser(email: String,password: String):Response<UserResponse> {
-        return  api.loginUser(LoginRequest(LoginData(email, password)))
+        return  api.loginUser(LoginRequest(LoginResponse(email, password)))
     }
 
     suspend fun signUpUser(email: String,password: String,username: String): Response<UserResponse>{
-        return api.signUpUser(SignupRequest(SignupData(email,password,username)))
+        return api.signUpUser(SignupRequest(SignUpResponse(email,password,username)))
     }
 
     suspend fun getGlobalFeed(): Response<ArticlesResponse> {
@@ -38,9 +42,11 @@ class MainRepository @Inject constructor(private val api: ConduitApi,private val
         password: String?
     ): Response<UserResponse> {
 
-        return conduitAuthApi.updateCurrentUser(UserUpdateRequest(UserUpdateData(
+        return conduitAuthApi.updateCurrentUser(
+            UserUpdateRequest(UserUpdateResponse(
             bio, email, image, username, password
-        )))
+        ))
+        )
     }
 
     suspend fun getCurrentUser(token: String): Response<UserResponse> {
@@ -58,7 +64,7 @@ class MainRepository @Inject constructor(private val api: ConduitApi,private val
         return conduitAuthApi.getMyArticle(username)
     }
 
-    suspend fun createArticle(articleCreateRequest: ArticleCreateRequest,token: String): Response<ArticleResponse>{
+    suspend fun createArticle(articleCreateRequest: ArticleCreateRequest, token: String): Response<ArticleResponse>{
         AppModule.authToken = token
         return conduitAuthApi.createArticle(articleCreateRequest)
     }

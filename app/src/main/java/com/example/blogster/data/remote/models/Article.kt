@@ -1,4 +1,4 @@
-package com.example.blogster.data.remote.responses
+package com.example.blogster.data.remote.models
 
 
 import com.squareup.moshi.Json
@@ -21,7 +21,7 @@ data class Article(
     @Json(name = "slug")
     val slug: String,
     @Json(name = "tagList")
-    val tagList: List<Any>,
+    val tagList: List<String>,
     @Json(name = "title")
     val title: String,
     @Json(name = "updatedAt")

@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import com.example.blogster.data.remote.Resource
-import com.example.blogster.data.remote.responses.ArticleCreateRequest
+import com.example.blogster.utils.Resource
+import com.example.blogster.data.remote.requests.ArticleCreateRequest
 import com.example.blogster.databinding.FragmentCreateArticleBinding
 import com.example.blogster.utils.Constants.TOKEN
 import com.example.blogster.utils.PrefsHelper

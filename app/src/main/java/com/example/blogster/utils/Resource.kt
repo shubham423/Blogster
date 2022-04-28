@@ -1,4 +1,4 @@
-package com.example.blogster.data.remote
+package com.example.blogster.utils
 
 sealed class Resource<T>(
     val data: T? = null,

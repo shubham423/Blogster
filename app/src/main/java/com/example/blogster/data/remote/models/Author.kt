@@ -1,4 +1,4 @@
-package com.example.blogster.data.remote.responses
+package com.example.blogster.data.remote.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

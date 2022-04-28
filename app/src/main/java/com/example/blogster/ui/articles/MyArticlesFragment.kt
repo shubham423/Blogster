@@ -1,6 +1,5 @@
 package com.example.blogster.ui.articles
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.blogster.data.remote.Resource
+import com.example.blogster.utils.Resource
 import com.example.blogster.databinding.FragmentMyArticlesBinding
 import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.ArticleFeedAdapter

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.blogster.R
-import com.example.blogster.data.remote.responses.Comment
+import com.example.blogster.data.remote.models.Comment
 import com.example.blogster.databinding.ItemCommentBinding
 
 class CommentsAdapter() :

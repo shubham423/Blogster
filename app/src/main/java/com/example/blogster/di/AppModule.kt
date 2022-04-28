@@ -61,7 +61,7 @@ object AppModule {
     @Named("Auth")
     fun provideRetrofitForAuth(okHttpClient: OkHttpClient, authInterceptor: Interceptor): Retrofit =
         Retrofit.Builder()
-            .baseUrl("https://conduit.productionready.io/api/")
+            .baseUrl("https://api.realworld.io/api/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient.newBuilder().addInterceptor(authInterceptor).build())
             .build()

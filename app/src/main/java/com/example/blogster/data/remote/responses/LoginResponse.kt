@@ -5,7 +5,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Errors(
-    @Json(name = "body")
-    val body: List<String>
+data class LoginResponse(
+    @Json(name = "email")
+    val email: String,
+    @Json(name = "password")
+    val password: String,
 )

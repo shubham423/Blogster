@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.blogster.data.remote.Resource
+import com.example.blogster.utils.Resource
 import com.example.blogster.databinding.FragmentProfileBinding
 import com.example.blogster.ui.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint

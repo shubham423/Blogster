@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.blogster.data.remote.Resource
-import com.example.blogster.data.remote.responses.Article
+import com.example.blogster.utils.Resource
+import com.example.blogster.data.remote.models.Article
 import com.example.blogster.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

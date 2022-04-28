@@ -1,5 +1,7 @@
 package com.example.blogster.data.remote.api
 
+import com.example.blogster.data.remote.requests.ArticleCreateRequest
+import com.example.blogster.data.remote.requests.UserUpdateRequest
 import com.example.blogster.data.remote.responses.*
 import retrofit2.Response
 import retrofit2.http.*

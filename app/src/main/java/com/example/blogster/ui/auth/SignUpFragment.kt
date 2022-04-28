@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.blogster.MainActivity
-import com.example.blogster.data.remote.Resource
+import com.example.blogster.utils.Resource
 import com.example.blogster.databinding.FragmentSignUpBinding
 import com.example.blogster.utils.Constants.TOKEN
 import com.example.blogster.utils.Constants.USERNAME

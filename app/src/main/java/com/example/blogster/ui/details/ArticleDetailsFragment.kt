@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import coil.load
 import com.example.blogster.R
-import com.example.blogster.data.remote.Resource
+import com.example.blogster.utils.Resource
 import com.example.blogster.databinding.FragmentArticleDetailsBinding
 import com.example.blogster.ui.articles.ArticlesViewModel
-import com.example.blogster.ui.auth.AuthViewModel
 import com.example.blogster.ui.feed.FeedViewModel
 import com.example.blogster.utils.Constants.TOKEN
 import com.example.blogster.utils.PrefsHelper
