@@ -34,6 +34,7 @@ class ProfileFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.userResponse.observe(viewLifecycleOwner){
+            binding.progressBar.visibility=View.GONE
             when (it) {
                 is Resource.Success -> {
                     binding?.apply {
@@ -58,6 +59,7 @@ class ProfileFragment : Fragment() {
     private fun setUpClickListeners() {
         binding.apply {
             submitButton.setOnClickListener {
+                binding.progressBar.visibility=View.VISIBLE
                 viewModel.update(
                     bio = bioEditText.text.toString(),
                     username = usernameEditText.text.toString().takeIf { it.isNotBlank() },

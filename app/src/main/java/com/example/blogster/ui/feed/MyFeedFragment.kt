@@ -31,6 +31,7 @@ class MyFeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.progressBar.visibility=View.VISIBLE
         val token= PrefsHelper.read(Constants.TOKEN,null)
 
         if (token != null) {
@@ -42,6 +43,7 @@ class MyFeedFragment : Fragment() {
     private fun setupObservers() {
         viewModel.myFeed.observe(viewLifecycleOwner) {
             Log.d("MyFeedFragment ", "${it.data}")
+            binding.progressBar.visibility=View.GONE
             when (it) {
                 is Resource.Success -> {
                     feedAdapter = ArticleFeedAdapter({ openArticle(it) })

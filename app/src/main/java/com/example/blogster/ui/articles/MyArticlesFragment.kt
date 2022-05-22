@@ -37,6 +37,7 @@ class MyArticlesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.progressBar4.visibility=View.VISIBLE
         token = PrefsHelper.read(Constants.TOKEN,null)
         username = PrefsHelper.read(Constants.USERNAME,null)
 
@@ -46,6 +47,7 @@ class MyArticlesFragment : Fragment() {
 
     private fun setupObservers() {
 
+        binding.progressBar4.visibility=View.GONE
         viewModelArticles.myArticlesResponse.observe(viewLifecycleOwner) { it ->
             when (it) {
                 is Resource.Success -> {

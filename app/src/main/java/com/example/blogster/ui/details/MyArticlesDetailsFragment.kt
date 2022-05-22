@@ -42,12 +42,14 @@ class MyArticlesDetailsFragment : Fragment() {
             if (articleId != null) {
                 viewModel.getArticle(articleId)
             }
+            binding.progressBar.visibility=View.VISIBLE
         }
         setUpObservers()
     }
 
     private fun setUpObservers() {
         viewModel.articleDetailResponse.observe(viewLifecycleOwner) {
+            binding.progressBar.visibility=View.GONE
             Log.d("ArticleDetails ", "${it.data}")
             when (it) {
                 is Resource.Success -> {

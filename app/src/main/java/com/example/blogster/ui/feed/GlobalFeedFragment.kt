@@ -29,12 +29,14 @@ class GlobalFeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.progressBar3.visibility=View.VISIBLE
         viewModel.fetchGlobalFeed()
         setupObservers()
     }
 
     private fun setupObservers() {
         viewModel.feed.observe(viewLifecycleOwner){
+            binding.progressBar3.visibility=View.GONE
             Log.d("GLobalFeedFragment ", "${it.data}")
             when(it){
                 is Resource.Success->{

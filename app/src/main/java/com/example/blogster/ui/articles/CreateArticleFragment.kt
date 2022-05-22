@@ -38,6 +38,7 @@ class CreateArticleFragment : Fragment() {
 
     private fun setUpObservers() {
         viewModel.createArticleResponse.observe(viewLifecycleOwner) {
+            binding.progressBar7.visibility=View.GONE
             Log.d("FavoriteFragment1 error", "$it")
             when (it) {
                 is Resource.Success -> {
@@ -59,6 +60,7 @@ class CreateArticleFragment : Fragment() {
 
     private fun setUpClickListeners() {
         binding.submitBtn.setOnClickListener {
+            binding.progressBar7.visibility=View.VISIBLE
             val title = binding.titleEt.text.toString()
             val bio = binding.bioEt.text.toString()
             val body = binding.bodyEt.text.toString()

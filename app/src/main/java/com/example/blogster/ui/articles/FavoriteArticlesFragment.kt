@@ -41,6 +41,7 @@ class FavoriteArticlesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.progressBar5.visibility=View.VISIBLE
         token= PrefsHelper.read(TOKEN,null)
         userName= PrefsHelper.read(USERNAME,null)
         viewModelArticles.getFavoriteArticles(token!!,userName!!)
@@ -50,6 +51,7 @@ class FavoriteArticlesFragment : Fragment() {
     private fun setupObservers() {
 
         viewModelArticles.articlesResponse.observe(viewLifecycleOwner){
+            binding.progressBar5.visibility=View.GONE
             Log.d("FavoriteFragment1 error", "$it")
             when (it) {
                 is Resource.Success -> {
