@@ -1,7 +1,9 @@
 package com.example.blogster.ui.auth
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.blogster.MainActivity
 import com.example.blogster.databinding.ActivityAuthBinding
@@ -19,6 +21,11 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         PrefsHelper.init(applicationContext)
+        val token=PrefsHelper.read(TOKEN,null)
+
+        if (token!=null){
+            startActivity(Intent(this, MainActivity::class.java))
+        }
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -26,10 +33,6 @@ class AuthActivity : AppCompatActivity() {
         if (logout){
             PrefsHelper.remove(TOKEN)
         }
-        val token=PrefsHelper.read(TOKEN,null)
 
-        if (token!=null){
-            startActivity(Intent(this, MainActivity::class.java))
-        }
     }
 }

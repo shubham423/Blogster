@@ -30,7 +30,6 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -66,6 +65,7 @@ class LoginFragment : Fragment() {
                 }
                 is Resource.Error -> {
                     Log.d("LoginFragment error", "${it.message}")
+                    Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
                     binding.progressBar.visibility = View.INVISIBLE
                 }
                 is Resource.Loading -> {
@@ -73,6 +73,9 @@ class LoginFragment : Fragment() {
                 }
                 else -> {
                     Log.d("LoginFragment else", "$it")
+                    if (it != null) {
+                        Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
